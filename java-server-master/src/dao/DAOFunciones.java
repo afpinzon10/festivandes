@@ -76,6 +76,16 @@ private ArrayList<Object> recursos;
 		
 	}
 	
+	public void funcionRealizada(Funcion func) throws SQLException{
+		String sql = "UPDATE FUNCION SET REALIZADO = 1 WHERE IDFUNCION = "+func.getIdfuncion();
+		System.out.println("SQL stmt    realizar funcion:" + sql);
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
+		
+	}
+	
+	
 	public ArrayList<Funcion> darFunciones(String fechaInicio, String fechaFin, String companiaTeatro, String categoriaEspectaculo, String idioma, boolean traduccion) throws SQLException, Exception {
 		ArrayList<Funcion> Funciones = new ArrayList<Funcion>();
 		String sql = "SELECT * FROM FUNCION WHERE";

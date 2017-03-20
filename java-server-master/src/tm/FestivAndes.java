@@ -262,6 +262,33 @@ public class FestivAndes {
 				}
 		}		
 		
+		public void realizarFuncion(Funcion func) throws SQLException {
+			DAOFunciones daoFuncion = new DAOFunciones();
+			
+			try {
+				this.conn = darConexion();
+				daoFuncion.setConn(conn);
+				daoFuncion.funcionRealizada(func);
+				conn.close();
+				
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					System.err.println("SQLException:" + e.getMessage());
+					e.printStackTrace();
+					throw e;
+				}finally {
+					try {
+						daoFuncion.cerrarRecursos();
+						if(this.conn!=null)
+							this.conn.close();
+					} catch (SQLException exception) {
+						System.err.println("SQLException closing resources:" + exception.getMessage());
+						exception.printStackTrace();
+						throw exception;
+					}
+				}
+			
+		}
 
 
 		/**
@@ -487,6 +514,9 @@ public class FestivAndes {
 			}
 			return new ListaVideos(videos);
 		}
+
+
+		
 		
 	}
 	
