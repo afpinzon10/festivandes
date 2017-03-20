@@ -46,7 +46,7 @@ public class BoletaServices {
 			} catch (Exception e) {
 				return Response.status(500).entity(doErrorMessage(e)).build();
 			}
-			return Response.status(200).entity(usuarios).build();
+			return Response.status(200).entity(boletas).build();
 		}
 }
 }

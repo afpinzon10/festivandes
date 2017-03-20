@@ -11,10 +11,10 @@ public class Boleta {
 	private int idlocalidad;
 	
 	@JsonProperty(value="fila")
-	private int fila;
+	private String fila;
 	
 	@JsonProperty(value="silla")
-	private int silla;
+	private String silla;
 	
 	@JsonProperty(value="idfuncion")
 	private int idfuncion;
@@ -23,7 +23,7 @@ public class Boleta {
 	private int idcliente;
 
 	public Boleta(@JsonProperty(value="idboleta") int idboleta, @JsonProperty(value="idlocalidad") int idlocalidad,
-			@JsonProperty(value="fila") int fila, @JsonProperty(value="silla") int silla, 
+			@JsonProperty(value="fila") String fila, @JsonProperty(value="silla") String silla, 
 			@JsonProperty(value="idfuncion") int idfuncion, @JsonProperty(value="idcliente") int idcliente) {
 		this.idboleta = idboleta;
 		this.idlocalidad = idlocalidad;
@@ -49,19 +49,19 @@ public class Boleta {
 		this.idlocalidad = idlocalidad;
 	}
 
-	public int getFila() {
+	public String getFila() {
 		return fila;
 	}
 
-	public void setFila(int fila) {
+	public void setFila(String fila) {
 		this.fila = fila;
 	}
 
-	public int getSilla() {
+	public String getSilla() {
 		return silla;
 	}
 
-	public void setSilla(int silla) {
+	public void setSilla(String silla) {
 		this.silla = silla;
 	}
 

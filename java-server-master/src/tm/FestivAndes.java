@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import dao.DAOBoletas;
 import dao.DAOClientes;
 import dao.DAOCompanias;
 import dao.DAOEspacios;
@@ -22,6 +23,7 @@ import vos.Cliente;
 import vos.Compania;
 import vos.Espacio;
 import vos.Funcion;
+import vos.ListaBoletas;
 import vos.ListaFunciones;
 import vos.ListaUsuarios;
 import vos.Usuario;
@@ -138,15 +140,15 @@ public class FestivAndes {
 			return new ListaFunciones(funciones);
 		}
 		
-		public ListaFunciones darBoletas() throws Exception {
+		public ListaBoletas darBoletas() throws Exception {
 			ArrayList<Boleta> boletas;
-			DA daoFunciones = new DAOFunciones();
+			DAOBoletas daoBoletas = new DAOBoletas();
 			try 
 			{
 				//////Transacción
 				this.conn = darConexion();
-				daoFunciones.setConn(conn);
-				boletas = daoFunciones.darFunciones();
+				daoBoletas.setConn(conn);
+				boletas = daoBoletas.darBoletas();
 
 			} catch (SQLException e) {
 				System.err.println("SQLException:" + e.getMessage());
@@ -158,7 +160,7 @@ public class FestivAndes {
 				throw e;
 			} finally {
 				try {
-					daoFunciones.cerrarRecursos();
+					daoBoletas.cerrarRecursos();
 					if(this.conn!=null)
 						this.conn.close();
 				} catch (SQLException exception) {
@@ -167,7 +169,7 @@ public class FestivAndes {
 					throw exception;
 				}
 			}
-			return new ListaFunciones(funciones);
+			return new ListaBoletas(boletas);
 		}
 		
 

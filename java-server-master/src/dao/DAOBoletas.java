@@ -39,7 +39,7 @@ public class DAOBoletas {
 	
 	public ArrayList<Boleta> darBoletas() throws SQLException
 	{
-		ArrayList<Boleta> usuarios  = new ArrayList<Boleta>();
+		ArrayList<Boleta> boletas  = new ArrayList<Boleta>();
 		String sql = "SELECT * FROM BOLETA";
 
 		System.out.println("SQL stmt:" + sql);
@@ -57,10 +57,11 @@ public class DAOBoletas {
 			int idFuncion = rs.getInt(5);
 			int idCliente = rs.getInt(6);
 			boletas.add(new Boleta(idBoleta, idLocalidad, fila, silla, idFuncion, idCliente));
+		
 		}
 		
-	System.out.println(usuarios.size());
-		return usuarios;
+	System.out.println(boletas.size());
+		return boletas;
 	}
 	
 	public void addUsuario(Usuario user) throws SQLException{
