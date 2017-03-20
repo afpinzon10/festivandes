@@ -9,12 +9,12 @@ import java.util.ArrayList;
 
 import vos.Preferencia;
 
-public class DAOPreferencia {
+public class DAOPreferencias {
 	private ArrayList<Object> recursos;
 
 	private Connection conn;
 
-	public DAOPreferencia ()
+	public DAOPreferencias ()
 	{
 		recursos = new ArrayList<Object>();
 	}

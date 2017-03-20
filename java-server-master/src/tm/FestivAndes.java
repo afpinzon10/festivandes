@@ -13,11 +13,13 @@ import dao.DAOClientes;
 import dao.DAOCompanias;
 import dao.DAOEspacios;
 import dao.DAOFunciones;
+import dao.DAOPreferencias;
 import dao.DAOTablaVideos;
 import dao.DAOUsuarios;
 
 
 import vos.ListaVideos;
+import vos.Preferencia;
 import vos.Boleta;
 import vos.Cliente;
 import vos.Compania;
@@ -25,6 +27,7 @@ import vos.Espacio;
 import vos.Funcion;
 import vos.ListaBoletas;
 import vos.ListaFunciones;
+import vos.ListaPreferencias;
 import vos.ListaUsuarios;
 import vos.Usuario;
 import vos.Video;
@@ -170,6 +173,38 @@ public class FestivAndes {
 				}
 			}
 			return new ListaBoletas(boletas);
+		}
+		
+		public ListaPreferencias darPreferencias() throws Exception {
+			ArrayList<Preferencia> preferencias;
+			DAOPreferencias daoPreferencias = new DAOPreferencias();
+			try 
+			{
+				//////Transacción
+				this.conn = darConexion();
+				daoPreferencias.setConn(conn);
+				preferencias = daoPreferencias.darPreferencias();
+
+			} catch (SQLException e) {
+				System.err.println("SQLException:" + e.getMessage());
+				e.printStackTrace();
+				throw e;
+			} catch (Exception e) {
+				System.err.println("GeneralException:" + e.getMessage());
+				e.printStackTrace();
+				throw e;
+			} finally {
+				try {
+					daoPreferencias.cerrarRecursos();
+					if(this.conn!=null)
+						this.conn.close();
+				} catch (SQLException exception) {
+					System.err.println("SQLException closing resources:" + exception.getMessage());
+					exception.printStackTrace();
+					throw exception;
+				}
+			}
+			return new ListaPreferencias(preferencias);
 		}
 		
 
@@ -358,7 +393,113 @@ public class FestivAndes {
 			
 		}
 
+		//-----------------------------------------------------
+		// RF7 REGISTRAR PREFERENCIA DE CLIENTE
+		//----------------------------------------------------
+		
+		public void addPreferencia(Preferencia preferencia) throws Exception {
+			DAOPreferencias daoPreferencias = new DAOPreferencias();
+			try 
+			{
+				//////Transacción
+				this.conn = darConexion();
+				daoPreferencias.setConn(conn);
+				daoPreferencias.addPreferencia(preferencia);
+				conn.commit();
 
+			} catch (SQLException e) {
+				System.err.println("SQLException:" + e.getMessage());
+				e.printStackTrace();
+				throw e;
+			} catch (Exception e) {
+				System.err.println("GeneralException:" + e.getMessage());
+				e.printStackTrace();
+				throw e;
+			} finally {
+				try {
+					daoPreferencias.cerrarRecursos();
+					if(this.conn!=null)
+						this.conn.close();
+				} catch (SQLException exception) {
+					System.err.println("SQLException closing resources:" + exception.getMessage());
+					exception.printStackTrace();
+					throw exception;
+				}
+			}
+		}
+		
+		public void updatePreferencia(Preferencia preferencia) throws Exception {
+			DAOPreferencias daoPreferencias = new DAOPreferencias();
+			try 
+			{
+				//////Transacción
+				this.conn = darConexion();
+				daoPreferencias.setConn(conn);
+				daoPreferencias.updatePreferencia(preferencia);
+
+			} catch (SQLException e) {
+				System.err.println("SQLException:" + e.getMessage());
+				e.printStackTrace();
+				throw e;
+			} catch (Exception e) {
+				System.err.println("GeneralException:" + e.getMessage());
+				e.printStackTrace();
+				throw e;
+			} finally {
+				try {
+					daoPreferencias.cerrarRecursos();
+					if(this.conn!=null)
+						this.conn.close();
+				} catch (SQLException exception) {
+					System.err.println("SQLException closing resources:" + exception.getMessage());
+					exception.printStackTrace();
+					throw exception;
+				}
+			}
+		}
+		
+		public void deletePreferencia(Preferencia preferencia) throws Exception {
+			DAOPreferencias daoPreferencias = new DAOPreferencias();
+			try 
+			{
+				//////Transacción
+				this.conn = darConexion();
+				daoPreferencias.setConn(conn);
+				daoPreferencias.deletePreferencia(preferencia);
+
+			} catch (SQLException e) {
+				System.err.println("SQLException:" + e.getMessage());
+				e.printStackTrace();
+				throw e;
+			} catch (Exception e) {
+				System.err.println("GeneralException:" + e.getMessage());
+				e.printStackTrace();
+				throw e;
+			} finally {
+				try {
+					daoPreferencias.cerrarRecursos();
+					if(this.conn!=null)
+						this.conn.close();
+				} catch (SQLException exception) {
+					System.err.println("SQLException closing resources:" + exception.getMessage());
+					exception.printStackTrace();
+					throw exception;
+				}
+			}
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		/**
 		 * Método que modela la transacción que busca el/los videos en la base de datos con el nombre entra como parámetro.
 		 * @param name - Nombre del video a buscar. name != null
