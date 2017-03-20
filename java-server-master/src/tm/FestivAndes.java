@@ -175,6 +175,33 @@ public class FestivAndes {
 			return new ListaBoletas(boletas);
 		}
 		
+		
+		public void addBoleta(Boleta boleta ) throws SQLException{
+			DAOBoletas daoBoletas = new DAOBoletas();
+			try {
+			this.conn = darConexion();
+			daoBoletas.setConn(conn);
+			daoBoletas.addBoleta(boleta);
+			conn.close();
+			
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				System.err.println("SQLException:" + e.getMessage());
+				e.printStackTrace();
+				throw e;
+			}finally {
+				try {
+					daoBoletas.cerrarRecursos();
+					if(this.conn!=null)
+						this.conn.close();
+				} catch (SQLException exception) {
+					System.err.println("SQLException closing resources:" + exception.getMessage());
+					exception.printStackTrace();
+					throw exception;
+				}
+			}
+		}
+		
 		public ListaPreferencias darPreferencias() throws Exception {
 			ArrayList<Preferencia> preferencias;
 			DAOPreferencias daoPreferencias = new DAOPreferencias();
