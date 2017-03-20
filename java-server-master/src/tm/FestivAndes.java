@@ -21,6 +21,7 @@ import vos.Cliente;
 import vos.Compania;
 import vos.Espacio;
 import vos.Funcion;
+import vos.ListaFunciones;
 import vos.ListaUsuarios;
 import vos.Usuario;
 import vos.Video;
@@ -104,6 +105,38 @@ public class FestivAndes {
 			return new ListaUsuarios(usuarios);
 		}
 
+		public ListaFunciones darFunciones() throws Exception {
+			ArrayList<Funcion> funciones;
+			DAOFunciones daoFunciones = new DAOFunciones();
+			try 
+			{
+				//////Transacción
+				this.conn = darConexion();
+				daoFunciones.setConn(conn);
+				funciones = daoFunciones.darFunciones();
+
+			} catch (SQLException e) {
+				System.err.println("SQLException:" + e.getMessage());
+				e.printStackTrace();
+				throw e;
+			} catch (Exception e) {
+				System.err.println("GeneralException:" + e.getMessage());
+				e.printStackTrace();
+				throw e;
+			} finally {
+				try {
+					daoFunciones.cerrarRecursos();
+					if(this.conn!=null)
+						this.conn.close();
+				} catch (SQLException exception) {
+					System.err.println("SQLException closing resources:" + exception.getMessage());
+					exception.printStackTrace();
+					throw exception;
+				}
+			}
+			return new ListaFunciones(funciones);
+		}
+		
 
 		////////////////////////////////////////
 		///////Transacciones////////////////////

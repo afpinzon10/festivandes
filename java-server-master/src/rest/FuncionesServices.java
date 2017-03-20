@@ -15,6 +15,7 @@ import tm.FestivAndes;
 import tm.VideoAndesMaster;
 import vos.Compania;
 import vos.Funcion;
+import vos.ListaFunciones;
 import vos.ListaVideos;
 import vos.Video;
 
@@ -36,7 +37,18 @@ public class FuncionesServices {
 			return "{ \"ERROR\": \""+ e.getMessage() + "\"}" ;
 		}
 		
-	
+		@GET
+		@Produces({ MediaType.APPLICATION_JSON })
+		public Response getFunciones() {
+			FestivAndes tm = new FestivAndes(getPath());
+			ListaFunciones funciones;
+			try {
+				funciones = tm.darFunciones();
+			} catch (Exception e) {
+				return Response.status(500).entity(doErrorMessage(e)).build();
+			}
+			return Response.status(200).entity(funciones).build();
+		}
 		
 		@PUT
 		@Consumes(MediaType.APPLICATION_JSON)
