@@ -70,4 +70,30 @@ public class DAOPreferencia {
 		prepStmt.executeQuery();
 		
 	}
+	
+	public void updatePreferencia(Preferencia Preferencia) throws SQLException {
+		String sql = "UPDATE Preferencia (IDCLIENTE, IDCATEGORIA, EDAD, TIPOESPACIO) VALUES ( ";
+		sql += Preferencia.getIdcliente() + ",";
+		sql += Preferencia.getIdcategoria() + ",";
+		sql += Preferencia.getEdad() + ",'";
+		sql += Preferencia.getTipoespacio() + "')";
+		
+		System.out.println("SQL stmt    updatePreferencia:" + sql);
+		
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
+	}
+	
+	public void deletePreferencia(Preferencia Preferencia) throws SQLException {
+		String sql = "DELETE FROM Preferencia WHERE IDCLIENTE = ";
+		sql += Preferencia.getIdcliente();
+		
+		System.out.println("SQL stmt    deletePreferencia:" + sql);
+		
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
+		
+	}
 }

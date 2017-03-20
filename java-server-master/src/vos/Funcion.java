@@ -7,43 +7,41 @@ import java.util.Date;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
+import oracle.sql.TIMESTAMP;
+
 public class Funcion {
 	
-	private ArrayList<Boleta> boletas;
+	
 	
 	@JsonProperty(value="idfuncion")
 	private int idfuncion;
 	
 	@JsonProperty(value="fecha")
-	private Date fecha;
-	
-	@JsonProperty(value="hora")
-	private Timestamp hora;
+	private Timestamp fecha;
 	
 	@JsonProperty(value="idespacio")
 	private int idespacio;
 	
 	@JsonProperty(value="idobra")
 	private int idobra;
+	
+	@JsonProperty(value="realizado")
+	private int realizado;
 
-	public Funcion(ArrayList<Boleta> boletas, @JsonProperty(value="idfuncion") int idfuncion, 
-			@JsonProperty(value="fecha") Date fecha, @JsonProperty(value="hora") Timestamp hora, 
-			@JsonProperty(value="idespacio") int idespacio, @JsonProperty(value="idobra") int idobra) {
-		this.boletas = boletas;
+	public Funcion( @JsonProperty(value="idfuncion") int idfuncion, 
+			@JsonProperty(value="fecha") Timestamp fecha,  
+			@JsonProperty(value="idespacio") int idespacio, @JsonProperty(value="idobra") int idobra, 
+			@JsonProperty(value="realizado") int realizado) {
+	
 		this.idfuncion = idfuncion;
 		this.fecha = fecha;
-		this.hora = hora;
+	
 		this.idespacio = idespacio;
 		this.idobra = idobra;
+		this.realizado = realizado;
 	}
 
-	public ArrayList<Boleta> getBoletas() {
-		return boletas;
-	}
 
-	public void setBoletas(ArrayList<Boleta> boletas) {
-		this.boletas = boletas;
-	}
 
 	public int getIdfuncion() {
 		return idfuncion;
@@ -53,21 +51,14 @@ public class Funcion {
 		this.idfuncion = idfuncion;
 	}
 
-	public Date getFecha() {
+	public Timestamp getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Date fecha) {
+	public void setFecha(Timestamp fecha) {
 		this.fecha = fecha;
 	}
 
-	public Timestamp getHora() {
-		return hora;
-	}
-
-	public void setHora(Timestamp hora) {
-		this.hora = hora;
-	}
 
 	public int getIdespacio() {
 		return idespacio;
@@ -84,6 +75,15 @@ public class Funcion {
 	public void setIdobra(int idobra) {
 		this.idobra = idobra;
 	}
+
+	public int getRealizado() {
+		return realizado;
+	}
+
+	public void setRealizado(int realizado) {
+		this.realizado = realizado;
+	}
+	
 	
 	
 }

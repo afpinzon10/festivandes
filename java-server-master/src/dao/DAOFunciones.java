@@ -51,11 +51,11 @@ private ArrayList<Object> recursos;
 
 		while (rs.next()) {
 			int idFuncion = Integer.parseInt(rs.getString("IDFUNCION"));
-			Date fecha = rs.getDate("FECHA");
-			Timestamp hora = rs.getTimestamp("HORA");
+			Timestamp fecha = rs.getTimestamp("FECHA");
 			int idEspacio = Integer.parseInt(rs.getString("IDESPACIO"));
 			int idObra = Integer.parseInt(rs.getString("IDOBRA"));
-			Funciones.add(new Funcion(null, idFuncion, fecha, hora, idEspacio, idObra));
+			int realizado = rs.getInt("REALIZADO");
+			Funciones.add(new Funcion( idFuncion, fecha, idEspacio, idObra,realizado));
 		}
 		return Funciones;
 	}
@@ -64,7 +64,7 @@ private ArrayList<Object> recursos;
 		
 		String sql = "INSERT INTO FUNCION VALUES (FECHA, HORA, IDESPACIO, IDOBRA)";
 		sql += funcion.getFecha() + ",'";
-		sql += funcion.getHora() + ",'";
+
 		sql += funcion.getIdespacio() + ",'";
 		sql += funcion.getIdobra() +")";
 		
@@ -108,12 +108,11 @@ private ArrayList<Object> recursos;
 
 		while (rs.next()) {
 			int idFuncion = Integer.parseInt(rs.getString("IDFUNCION"));
-			
-			Date fecha = rs.getDate("FECHA");
-			Timestamp hora = rs.getTimestamp(("HORA"));
+			Timestamp fecha = rs.getTimestamp("FECHA");
 			int idEspacio = Integer.parseInt(rs.getString("IDESPACIO"));
 			int idObra = Integer.parseInt(rs.getString("IDOBRA"));
-			Funciones.add(new Funcion(null, idFuncion, fecha, hora, idEspacio, idObra));
+			int realizado = rs.getInt("REALIZADO");
+			Funciones.add(new Funcion( idFuncion, fecha, idEspacio, idObra,realizado));
 		}
 		return Funciones;
 	}

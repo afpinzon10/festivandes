@@ -20,7 +20,7 @@ public class ListaFunciones {
 	 * Método que retorna la lista de videos
 	 * @return  List - List con los videos
 	 */
-	public List<Funcion> getUsuarios() {
+	public List<Funcion> getFunciones() {
 		return funciones;
 	}
 }

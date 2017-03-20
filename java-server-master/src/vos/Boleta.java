@@ -7,11 +7,8 @@ public class Boleta {
 	@JsonProperty(value="idboleta")
 	private int idboleta;
 	
-	@JsonProperty(value="localidad")
-	private int localidad;
-	
-	@JsonProperty(value="precio")
-	private int precio;
+	@JsonProperty(value="idlocalidad")
+	private int idlocalidad;
 	
 	@JsonProperty(value="fila")
 	private int fila;
@@ -22,19 +19,18 @@ public class Boleta {
 	@JsonProperty(value="idfuncion")
 	private int idfuncion;
 	
-	@JsonProperty(value="idusuario")
-	private int idusuario;
+	@JsonProperty(value="idcliente")
+	private int idcliente;
 
-	public Boleta(@JsonProperty(value="idboleta") int idboleta, @JsonProperty(value="localidad") int localidad, @JsonProperty(value="precio") int precio, 
-			@JsonProperty(value="fila") int fila, @JsonProperty(value="silla") int silla, @JsonProperty(value="idfuncion") int idfuncion, 
-			@JsonProperty(value="idusuario") int idusuario) {
+	public Boleta(@JsonProperty(value="idboleta") int idboleta, @JsonProperty(value="idlocalidad") int idlocalidad,
+			@JsonProperty(value="fila") int fila, @JsonProperty(value="silla") int silla, 
+			@JsonProperty(value="idfuncion") int idfuncion, @JsonProperty(value="idcliente") int idcliente) {
 		this.idboleta = idboleta;
-		this.localidad = localidad;
-		this.precio = precio;
+		this.idlocalidad = idlocalidad;
 		this.fila = fila;
 		this.silla = silla;
 		this.idfuncion = idfuncion;
-		this.idusuario = idusuario;
+		this.idcliente = idcliente;
 	}
 
 	public int getIdboleta() {
@@ -45,20 +41,12 @@ public class Boleta {
 		this.idboleta = idboleta;
 	}
 
-	public int getLocalidad() {
-		return localidad;
+	public int getIdlocalidad() {
+		return idlocalidad;
 	}
 
-	public void setLocalidad(int localidad) {
-		this.localidad = localidad;
-	}
-
-	public int getPrecio() {
-		return precio;
-	}
-
-	public void setPrecio(int precio) {
-		this.precio = precio;
+	public void setIdlocalidad(int idlocalidad) {
+		this.idlocalidad = idlocalidad;
 	}
 
 	public int getFila() {
@@ -85,12 +73,12 @@ public class Boleta {
 		this.idfuncion = idfuncion;
 	}
 
-	public int getIdusuario() {
-		return idusuario;
+	public int getIdcliente() {
+		return idcliente;
 	}
 
-	public void setIdusuario(int idusuario) {
-		this.idusuario = idusuario;
+	public void setIdcliente(int idcliente) {
+		this.idcliente = idcliente;
 	}
 
 	
