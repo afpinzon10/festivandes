@@ -60,7 +60,7 @@ public class DAOBoletas {
 		
 		}
 		
-	System.out.println(boletas.size());
+	System.out.println("HAY BOLETAS "+ boletas.size());
 		return boletas;
 	}
 	

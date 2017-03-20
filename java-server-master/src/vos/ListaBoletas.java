@@ -12,7 +12,7 @@ public class ListaBoletas {
 	 * Constructor de la clase ListaVideos
 	 * @param videos - videos para agregar al arreglo de la clase
 	 */
-	public ListaBoletas( @JsonProperty(value="boletas")List<Boleta> usuarios){
+	public ListaBoletas( @JsonProperty(value="boletas")List<Boleta> boletas){
 		this.boletas = boletas;
 	}
 
