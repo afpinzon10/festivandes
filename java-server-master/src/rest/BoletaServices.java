@@ -1,7 +1,9 @@
 package rest;
 
 import javax.servlet.ServletContext;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
@@ -9,7 +11,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import tm.FestivAndes;
+import tm.VideoAndesMaster;
+import vos.Boleta;
 import vos.ListaBoletas;
+import vos.Video;
 
 @Path("boletas")
 public class BoletaServices {
@@ -41,6 +46,22 @@ public class BoletaServices {
 				return Response.status(500).entity(doErrorMessage(e)).build();
 			}
 			return Response.status(200).entity(boletas).build();
+		}
+		
+		
+		@PUT
+		@Path("/comprar")
+		@Consumes(MediaType.APPLICATION_JSON)
+		@Produces(MediaType.APPLICATION_JSON)
+		public Response addBoleta(Boleta boleta) {
+			
+			FestivAndes tm = new FestivAndes(getPath());
+			try {
+				tm.addBoleta();
+			} catch (Exception e) {
+				return Response.status(500).entity(doErrorMessage(e)).build();
+			}
+			return Response.status(200).entity(boleta).build();
 		}
 }
 

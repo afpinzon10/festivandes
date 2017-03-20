@@ -64,11 +64,14 @@ public class DAOBoletas {
 		return boletas;
 	}
 	
-	public void addUsuario(Usuario user) throws SQLException{
-		String sql = "INSERT INTO USUARIO VALUES (NULL,'";
-		sql += user.getLogin() + "','";
-		sql += user.getPassword() + "',";
-		sql += user.getIdrol() + ")";
+	public void addBoleta(Boleta boleta) throws SQLException{
+		String sql = "INSERT INTO BOLETA VALUES (";
+		sql += boleta.getIdboleta() + ",";
+		sql += boleta.getIdlocalidad() + ",'";
+		sql += boleta.getFila() + "','";
+		sql += boleta.getSilla() + "',";
+		sql += boleta.getIdfuncion() + ",";
+		sql += boleta.getIdcliente() + ")";
 		
 		System.out.println("SQL stmt    addUsuario:" + sql);
 		
