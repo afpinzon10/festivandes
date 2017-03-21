@@ -14,12 +14,14 @@ import dao.DAOCompanias;
 import dao.DAOEspacios;
 import dao.DAOFunciones;
 import dao.DAOPreferencias;
+import dao.DAORFC1;
 import dao.DAOTablaVideos;
 import dao.DAOUsuarios;
 
 
 import vos.ListaVideos;
 import vos.Preferencia;
+import vos.RFC1;
 import vos.Boleta;
 import vos.Cliente;
 import vos.Compania;
@@ -28,6 +30,7 @@ import vos.Funcion;
 import vos.ListaBoletas;
 import vos.ListaFunciones;
 import vos.ListaPreferencias;
+import vos.ListaRFC1;
 import vos.ListaUsuarios;
 import vos.Usuario;
 import vos.Video;
@@ -756,6 +759,41 @@ public class FestivAndes {
 			}
 			return new ListaVideos(videos);
 		}
+
+		
+
+		public ListaRFC1 darRFC1() throws Exception {
+			ArrayList<RFC1> rfc1;
+			DAORFC1 daorfc1s = new DAORFC1();
+			try 
+			{
+				//////Transacción
+				this.conn = darConexion();
+				daorfc1s.setConn(conn);
+				rfc1 = daorfc1s.darRFC1();
+
+			} catch (SQLException e) {
+				System.err.println("SQLException:" + e.getMessage());
+				e.printStackTrace();
+				throw e;
+			} catch (Exception e) {
+				System.err.println("GeneralException:" + e.getMessage());
+				e.printStackTrace();
+				throw e;
+			} finally {
+				try {
+					daorfc1s.cerrarRecursos();
+					if(this.conn!=null)
+						this.conn.close();
+				} catch (SQLException exception) {
+					System.err.println("SQLException closing resources:" + exception.getMessage());
+					exception.printStackTrace();
+					throw exception;
+				}
+			}
+			return new ListaRFC1(rfc1);
+		}
+
 
 
 		
