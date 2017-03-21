@@ -181,8 +181,14 @@ public class FestivAndes {
 			try {
 			this.conn = darConexion();
 			daoBoletas.setConn(conn);
-			daoBoletas.addBoleta(boleta);
+			
+			if(daoBoletas.sillaDispoble(boleta) && daoBoletas.boletasDisponibles(boleta)){
+				daoBoletas.addBoleta(boleta);
+				
+				
+			}
 			conn.close();
+			
 			
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

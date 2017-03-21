@@ -79,4 +79,42 @@ public class DAOBoletas {
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 	}
+
+	public boolean sillaDispoble(Boleta boleta) throws SQLException {
+		
+		String sql = "SELECT COUNT(*) FROM BOLETA WHERE SILLA='"+boleta.getSilla()+"' AND FILA ='"+boleta.getFila()+"' ";
+		System.out.println("SQL stmt    addUsuario:" + sql);
+		
+		System.out.println("SQL stmt:" + sql);
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		
+		if(rs.next()){
+			return false;
+		}
+		return true;
+	}
+
+	public boolean boletasDisponibles(Boleta boleta) throws SQLException {
+
+		String sql = "SELECT DISTINCT CAPACIDAD -(SELECT COUNT(*) FROM BOLETA) AS BOLETASDISPONIBLES FROM (SELECT * FROM LOCALIDAD INNER JOIN ESPACIO ON LOCALIDAD.IDESPACIO=ESPACIO.IDESPACIO) NATURAL JOIN (SELECT * FROM FUNCION NATURAL JOIN BOLETA) WHERE IDFUNCION ="+boleta.getIdfuncion();
+		System.out.println("SQL stmt    addUsuario:" + sql);
+		
+		System.out.println("SQL stmt:" + sql);
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		
+		int total =0;
+		while(rs.next()){
+			 total = rs.getInt(1);
+		}
+		
+		if(total <=0){
+			return false;
+		}
+		return true;
+		
+	}
 }
