@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 
 import tm.FestivAndes;
 import vos.ListaRFC1;
+import vos.ListaRFC2;
 import vos.ListaUsuarios;
 
 @Path("")
@@ -39,11 +40,27 @@ public class ConsultasServices {
 		ListaRFC1 rfc1;
 		try {
 			rfc1 = tm.darRFC1();
-			System.out.println("lol");
+			System.out.println("lol1");
 			
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		return Response.status(200).entity(rfc1).build();
+	}
+	
+	@GET
+	@Path("/rfc2")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getRFC2() {
+		FestivAndes tm = new FestivAndes(getPath());
+		ListaRFC2 rfc2;
+		try {
+			rfc2 = tm.darRFC2();
+			System.out.println("lol2");
+			
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(rfc2).build();
 	}
 }

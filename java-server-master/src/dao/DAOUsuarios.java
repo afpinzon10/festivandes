@@ -61,7 +61,8 @@ public class DAOUsuarios {
 	}
 	
 	public void addUsuario(Usuario user) throws SQLException{
-		String sql = "INSERT INTO USUARIO VALUES (NULL,'";
+		String sql = "INSERT INTO USUARIO VALUES (";
+		sql += user.getIdusuario() + ", '";
 		sql += user.getLogin() + "','";
 		sql += user.getPassword() + "',";
 		sql += user.getIdrol() + ")";

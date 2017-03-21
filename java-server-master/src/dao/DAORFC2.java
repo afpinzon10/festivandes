@@ -7,16 +7,16 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-import org.codehaus.jackson.annotate.JsonProperty;
-
 import vos.RFC1;
+import vos.RFC2;
 
-public class DAORFC1 {
+public class DAORFC2 {
+
 private ArrayList<Object> recursos;
 	
 	private Connection conn;
 	
-	public DAORFC1 ()
+	public DAORFC2 ()
 	{
 		recursos = new ArrayList<Object>();
 	}
@@ -37,8 +37,8 @@ private ArrayList<Object> recursos;
 		this.conn = con;
 	}
 	
-	public ArrayList<RFC1> darRFC1() throws SQLException, Exception {
-		ArrayList<RFC1> rfc1 = new ArrayList<RFC1>();
+	public ArrayList<RFC2> darRFC2() throws SQLException, Exception {
+		ArrayList<RFC2> rfc2 = new ArrayList<RFC2>();
 		String sql = "SELECT * FROM (SELECT * FROM  PRODUCCION NATURAL JOIN COMPANIA)T1  "
 				+ "INNER JOIN (SELECT * FROM (SELECT * FROM OBRA NATURAL JOIN FUNCION) NATURAL JOIN "
 				+ "(SELECT * FROM CATEGORIA_OBRA NATURAL JOIN CATEGORIA))T2 ON T2.IDOBRA = T1.IDOBRA "
@@ -51,26 +51,26 @@ private ArrayList<Object> recursos;
 		ResultSet rs = prepStmt.executeQuery();
 
 		while (rs.next()) {
-			 	int idcompania =rs.getInt(1);
-				 int idobra = rs.getInt(2);
-				 String nombre = rs.getString(3);
-				 String email = rs.getString(4);
-				 int idusuario = rs.getInt(5);	
-				 String nombreobra = rs.getString(7);
-				 int duracion = rs.getInt(8);
-				 String idioma = rs.getString(9);
-				 int edad = rs.getInt(10);
-				 String sinopsis = rs.getString(11);
-				 int costo = rs.getInt(12);
-				 int traduccion = rs.getInt(13);
-				 Timestamp fecha = rs.getTimestamp(15);
-				 int idespacio = rs.getInt(16);
-				 int idcategoria = rs.getInt(17);
-				 String descripcion = rs.getString(18);
+			Timestamp fecha = rs.getTimestamp(3);
+			String localidad = rs.getString(4);
+			int precio = rs.getInt(5);
+			String espacio = rs.getString(6);
+			String ubicacion = rs.getString(7);
+			String tipo = rs.getString(8);
+			String ciudad = rs.getString(9);
+			String telefono = rs.getString(10);
+			int disponible = rs.getInt(11);
+			String obra = rs.getString(13);
+			int duracion = rs.getInt(14);
+			String idioma = rs.getString(15);
+			int edad = rs.getInt(16);
+			String sinopsis = rs.getString(17);
+			int costo = rs.getInt(18);
+			int traduccion = rs.getInt(19);
 			
 		
-			rfc1.add(new RFC1(idcompania, idobra, nombre, email, idusuario, nombreobra, duracion, idioma, edad, sinopsis, costo, traduccion, fecha, idespacio, idcategoria, descripcion));
+			rfc2.add(new RFC2(fecha, localidad, precio, espacio, ubicacion, tipo, ciudad, telefono, disponible, obra, duracion, idioma, edad, sinopsis, costo, traduccion));
 		}
-		return rfc1;
+		return rfc2;
 	}
 }
