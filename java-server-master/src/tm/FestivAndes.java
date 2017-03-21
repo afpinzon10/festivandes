@@ -14,12 +14,14 @@ import dao.DAOCompanias;
 import dao.DAOEspacios;
 import dao.DAOFunciones;
 import dao.DAOPreferencias;
+import dao.DAORFC1;
 import dao.DAOTablaVideos;
 import dao.DAOUsuarios;
 
 
 import vos.ListaVideos;
 import vos.Preferencia;
+import vos.RFC1;
 import vos.Boleta;
 import vos.Cliente;
 import vos.Compania;
@@ -28,6 +30,7 @@ import vos.Funcion;
 import vos.ListaBoletas;
 import vos.ListaFunciones;
 import vos.ListaPreferencias;
+import vos.ListaRFC1;
 import vos.ListaUsuarios;
 import vos.Usuario;
 import vos.Video;
