@@ -15,12 +15,14 @@ import javax.ws.rs.core.Response;
 
 import tm.FestivAndes;
 import tm.VideoAndesMaster;
+import vos.ListaPreferencias;
 import vos.ListaUsuarios;
 import vos.ListaVideos;
+import vos.Preferencia;
 import vos.Usuario;
 import vos.Video;
 
-@Path("preferencias")
+@Path("usuarios/{idUsuario}/clientes/{idCliente}")
 public class PreferenciaServices {
 	
 	@Context
@@ -35,143 +37,64 @@ public class PreferenciaServices {
 		return "{ \"ERROR\": \""+ e.getMessage() + "\"}" ;
 	}
 	
-
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getVideos() {
-		VideoAndesMaster tm = new VideoAndesMaster(getPath());
-		ListaVideos videos;
+	public Response getPreferencias(
+			@javax.ws.rs.PathParam("idUsuario") String idUsuario, 
+			@javax.ws.rs.PathParam("idCliente") String idCliente) {
+		FestivAndes tm = new FestivAndes(getPath());
+		ListaPreferencias preferencias;
 		try {
-			videos = tm.darVideos();
+			preferencias = tm.darPreferencias(idUsuario, idCliente);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		return Response.status(200).entity(videos).build();
+		return Response.status(200).entity(preferencias).build();
 	}
 
-
-    /**
-     * Método que expone servicio REST usando GET que busca el video con el nombre que entra como parámetro
-     * <b>URL: </b> http://"ip o nombre de host":8080/VideoAndes/rest/videos/name/"name para la busqueda"
-     * @param name - Nombre del video a buscar que entra en la URL como parámetro 
-     * @return Json con el/los videos encontrados con el nombre que entra como parámetro o json con 
-     * el error que se produjo
-     */
-	@GET
-	@Path("/name/{name}")
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getVideoName(@javax.ws.rs.PathParam("name") String name) {
-		VideoAndesMaster tm = new VideoAndesMaster(getPath());
-		ListaVideos videos;
-		try {
-			if (name == null || name.length() == 0)
-				throw new Exception("Nombre del video no valido");
-			videos = tm.buscarVideosPorName(name);
-		} catch (Exception e) {
-			return Response.status(500).entity(doErrorMessage(e)).build();
-		}
-		return Response.status(200).entity(videos).build();
-	}
-	
-    /**
-     * Método que expone servicio REST usando GET que busca el video mas alquilado
-     * <b>URL: </b> http://"ip o nombre de host":8080/VideoAndes/rest/videos/MayorAlquilado
-     * @return Json con el/los videos encontrados con el nombre que entra como parámetro o json con 
-     * el error que se produjo
-     */
-	@GET
-	@Path("/MayorAlquilado")
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getVideoMayorAlquilado() {
-		VideoAndesMaster tm = new VideoAndesMaster(getPath());
-		ListaVideos videos;
-		try {
-			videos = tm.videosMasAlquilados();
-		} catch (Exception e) {
-			return Response.status(500).entity(doErrorMessage(e)).build();
-		}
-		return Response.status(200).entity(videos).build();
-	}
-
-
-    /**
-     * Método que expone servicio REST usando PUT que agrega el video que recibe en Json
-     * <b>URL: </b> http://"ip o nombre de host":8080/VideoAndes/rest/videos/video
-     * @param video - video a agregar
-     * @return Json con el video que agrego o Json con el error que se produjo
-     */
 	@PUT
-	@Path("/video")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addVideo(Video video) {
-		VideoAndesMaster tm = new VideoAndesMaster(getPath());
+	public Response addVideo(Preferencia preferencia, 
+			@javax.ws.rs.PathParam("idUsuario") String idUsuario, 
+			@javax.ws.rs.PathParam("idCliente") String idCliente) {
+		FestivAndes tm = new FestivAndes(getPath());
 		try {
-			tm.addVideo(video);
+			tm.addPreferencia(preferencia, idUsuario, idCliente);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		return Response.status(200).entity(video).build();
+		return Response.status(200).entity(preferencia).build();
 	}
-	
-    /**
-     * Método que expone servicio REST usando PUT que agrega los videos que recibe en Json
-     * <b>URL: </b> http://"ip o nombre de host":8080/VideoAndes/rest/videos/videos
-     * @param videos - videos a agregar. 
-     * @return Json con el video que agrego o Json con el error que se produjo
-     */
-	@PUT
-	@Path("/videos")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response addVideo(ListaVideos videos) {
-		VideoAndesMaster tm = new VideoAndesMaster(getPath());
-		try {
-			tm.addVideos(videos);
-		} catch (Exception e) {
-			return Response.status(500).entity(doErrorMessage(e)).build();
-		}
-		return Response.status(200).entity(videos).build();
-	}
-	
-    /**
-     * Método que expone servicio REST usando POST que actualiza el video que recibe en Json
-     * <b>URL: </b> http://"ip o nombre de host":8080/VideoAndes/rest/videos/video
-     * @param video - video a actualizar. 
-     * @return Json con el video que actualizo o Json con el error que se produjo
-     */
+
 	@POST
-	@Path("/video")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateVideo(Video video) {
-		VideoAndesMaster tm = new VideoAndesMaster(getPath());
+	public Response updateVideo(Preferencia preferencia, 
+			@javax.ws.rs.PathParam("idUsuario") String idUsuario, 
+			@javax.ws.rs.PathParam("idCliente") String idCliente) {
+		FestivAndes tm = new FestivAndes(getPath());
 		try {
-			tm.updateVideo(video);
+			tm.updatePreferencia(preferencia, idUsuario, idCliente);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		return Response.status(200).entity(video).build();
+		return Response.status(200).entity(preferencia).build();
 	}
-	
-    /**
-     * Método que expone servicio REST usando DELETE que actualiza el video que recibe en Json
-     * <b>URL: </b> http://"ip o nombre de host":8080/VideoAndes/rest/videos/video
-     * @param video - video a aliminar. 
-     * @return Json con el video que elimino o Json con el error que se produjo
-     */
+
 	@DELETE
-	@Path("/video")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteVideo(Video video) {
-		VideoAndesMaster tm = new VideoAndesMaster(getPath());
+	public Response deleteVideo(Preferencia preferencia, 
+			@javax.ws.rs.PathParam("idUsuario") String idUsuario, 
+			@javax.ws.rs.PathParam("idCliente") String idCliente) {
+		FestivAndes tm = new FestivAndes(getPath());
 		try {
-			tm.deleteVideo(video);
+			tm.deletePreferencia(preferencia, idUsuario, idCliente);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		return Response.status(200).entity(video).build();
+		return Response.status(200).entity(preferencia).build();
 	}
 
 

@@ -208,7 +208,7 @@ public class FestivAndes {
 			}
 		}
 		
-		public ListaPreferencias darPreferencias() throws Exception {
+		public ListaPreferencias darPreferencias(String idUsuario, String idCliente) throws Exception {
 			ArrayList<Preferencia> preferencias;
 			DAOPreferencias daoPreferencias = new DAOPreferencias();
 			try 
@@ -216,7 +216,7 @@ public class FestivAndes {
 				//////Transacción
 				this.conn = darConexion();
 				daoPreferencias.setConn(conn);
-				preferencias = daoPreferencias.darPreferencias();
+				preferencias = daoPreferencias.darPreferencias(idUsuario, idCliente);
 
 			} catch (SQLException e) {
 				System.err.println("SQLException:" + e.getMessage());
@@ -430,14 +430,14 @@ public class FestivAndes {
 		// RF7 REGISTRAR PREFERENCIA DE CLIENTE
 		//----------------------------------------------------
 		
-		public void addPreferencia(Preferencia preferencia) throws Exception {
+		public void addPreferencia(Preferencia preferencia, String idUsuario, String idCliente) throws Exception {
 			DAOPreferencias daoPreferencias = new DAOPreferencias();
 			try 
 			{
 				//////Transacción
 				this.conn = darConexion();
 				daoPreferencias.setConn(conn);
-				daoPreferencias.addPreferencia(preferencia);
+				daoPreferencias.addPreferencia(preferencia, idUsuario, idCliente);
 				conn.commit();
 
 			} catch (SQLException e) {
@@ -461,14 +461,14 @@ public class FestivAndes {
 			}
 		}
 		
-		public void updatePreferencia(Preferencia preferencia) throws Exception {
+		public void updatePreferencia(Preferencia preferencia, String idUsuario, String idCliente) throws Exception {
 			DAOPreferencias daoPreferencias = new DAOPreferencias();
 			try 
 			{
 				//////Transacción
 				this.conn = darConexion();
 				daoPreferencias.setConn(conn);
-				daoPreferencias.updatePreferencia(preferencia);
+				daoPreferencias.updatePreferencia(preferencia, idUsuario, idCliente);
 
 			} catch (SQLException e) {
 				System.err.println("SQLException:" + e.getMessage());
@@ -491,14 +491,14 @@ public class FestivAndes {
 			}
 		}
 		
-		public void deletePreferencia(Preferencia preferencia) throws Exception {
+		public void deletePreferencia(Preferencia preferencia, String idUsuario, String idCliente) throws Exception {
 			DAOPreferencias daoPreferencias = new DAOPreferencias();
 			try 
 			{
 				//////Transacción
 				this.conn = darConexion();
 				daoPreferencias.setConn(conn);
-				daoPreferencias.deletePreferencia(preferencia);
+				daoPreferencias.deletePreferencia(preferencia, idUsuario, idCliente);
 
 			} catch (SQLException e) {
 				System.err.println("SQLException:" + e.getMessage());

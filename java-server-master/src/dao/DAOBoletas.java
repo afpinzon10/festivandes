@@ -89,8 +89,12 @@ public class DAOBoletas {
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
-		
-		if(rs.next()){
+		int existe =0;
+		while (rs.next()){
+			existe = rs.getInt(1);
+		}
+		if(existe >0){
+			
 			return false;
 		}
 		return true;

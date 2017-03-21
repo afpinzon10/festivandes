@@ -36,10 +36,10 @@ public class DAOPreferencias {
 		this.conn = con;
 	}
 	
-	public ArrayList<Preferencia> darPreferencias() throws SQLException
+	public ArrayList<Preferencia> darPreferencias(String idUsuario, String idCliente2) throws SQLException
 	{
 		ArrayList<Preferencia> usuarios  = new ArrayList<Preferencia>();
-		String sql = "SELECT * FROM Preferencia";
+		String sql = "SELECT * FROM Preferencia WHERE IDCLIENTE = " + Integer.parseInt(idCliente2);
 
 		System.out.println("SQL stmt:" + sql);
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
@@ -56,9 +56,9 @@ public class DAOPreferencias {
 	}
 	
 
-	public void addPreferencia(Preferencia Preferencia) throws SQLException {
+	public void addPreferencia(Preferencia Preferencia, String idUsuario, String idCliente) throws SQLException {
 		String sql = "INSERT INTO Preferencia (IDCLIENTE, IDCATEGORIA, EDAD, TIPOESPACIO) VALUES ( ";
-		sql += Preferencia.getIdcliente() + ",";
+		sql += Integer.parseInt(idCliente) + ",";
 		sql += Preferencia.getIdcategoria() + ",";
 		sql += Preferencia.getEdad() + ",'";
 		sql += Preferencia.getTipoespacio() + "')";
@@ -71,12 +71,16 @@ public class DAOPreferencias {
 		
 	}
 	
-	public void updatePreferencia(Preferencia Preferencia) throws SQLException {
+	public void updatePreferencia(Preferencia Preferencia, String idUsuario, String idCliente) throws SQLException {
 		String sql = "UPDATE Preferencia (IDCLIENTE, IDCATEGORIA, EDAD, TIPOESPACIO) VALUES ( ";
-		sql += Preferencia.getIdcliente() + ",";
+		sql += Integer.parseInt(idCliente) + ",";
 		sql += Preferencia.getIdcategoria() + ",";
 		sql += Preferencia.getEdad() + ",'";
-		sql += Preferencia.getTipoespacio() + "')";
+		sql += Preferencia.getTipoespacio() + "') WHERE IDCLIENTE = " + Integer.parseInt(idCliente) + 
+				" AND IDCATEGORIA = " + Preferencia.getIdcategoria() + 
+				" AND EDAD LIKE '%" + Preferencia.getEdad() + 
+				"%' AND TIPOESPACIO LIKE '%" + Preferencia.getTipoespacio() + 
+				"%'";
 		
 		System.out.println("SQL stmt    updatePreferencia:" + sql);
 		
@@ -85,9 +89,12 @@ public class DAOPreferencias {
 		prepStmt.executeQuery();
 	}
 	
-	public void deletePreferencia(Preferencia Preferencia) throws SQLException {
-		String sql = "DELETE FROM Preferencia WHERE IDCLIENTE = ";
-		sql += Preferencia.getIdcliente();
+	public void deletePreferencia(Preferencia Preferencia, String idUsuario, String idCliente) throws SQLException {
+		String sql = "DELETE FROM Preferencia WHERE IDCLIENTE = " + Integer.parseInt(idCliente) + 
+				" AND IDCATEGORIA = " + Preferencia.getIdcategoria() + 
+				" AND EDAD LIKE '%" + Preferencia.getEdad() + 
+				"%' AND TIPOESPACIO LIKE '%" + Preferencia.getTipoespacio() + 
+				"%'";
 		
 		System.out.println("SQL stmt    deletePreferencia:" + sql);
 		
