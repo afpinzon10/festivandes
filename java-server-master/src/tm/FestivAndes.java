@@ -757,6 +757,41 @@ public class FestivAndes {
 			return new ListaVideos(videos);
 		}
 
+		
+
+		public ListaRFC1 darRFC1() throws Exception {
+			ArrayList<RFC1> rfc1;
+			DAORFC1 daorfc1s = new DAORFC1();
+			try 
+			{
+				//////Transacción
+				this.conn = darConexion();
+				daorfc1s.setConn(conn);
+				rfc1 = daorfc1s.darRFC1();
+
+			} catch (SQLException e) {
+				System.err.println("SQLException:" + e.getMessage());
+				e.printStackTrace();
+				throw e;
+			} catch (Exception e) {
+				System.err.println("GeneralException:" + e.getMessage());
+				e.printStackTrace();
+				throw e;
+			} finally {
+				try {
+					daorfc1s.cerrarRecursos();
+					if(this.conn!=null)
+						this.conn.close();
+				} catch (SQLException exception) {
+					System.err.println("SQLException closing resources:" + exception.getMessage());
+					exception.printStackTrace();
+					throw exception;
+				}
+			}
+			return new ListaRFC1(rfc1);
+		}
+
+
 
 		
 		
