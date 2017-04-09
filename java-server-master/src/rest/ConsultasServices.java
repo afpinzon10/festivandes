@@ -13,6 +13,8 @@ import javax.ws.rs.core.Response;
 import tm.FestivAndes;
 import vos.ListaRFC1;
 import vos.ListaRFC2;
+import vos.ListaRFC3;
+import vos.ListaRFC4;
 import vos.ListaUsuarios;
 
 @Path("")
@@ -62,5 +64,37 @@ public class ConsultasServices {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		return Response.status(200).entity(rfc2).build();
+	}
+	
+	@GET
+	@Path("/rfc3")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getRFC3() {
+		FestivAndes tm = new FestivAndes(getPath());
+		ListaRFC3 rfc3;
+		try {
+			rfc3 = tm.darRFC3();
+			System.out.println("lol3");
+			
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(rfc3).build();
+	}
+	
+	@GET
+	@Path("/rfc4")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getRFC4() {
+		FestivAndes tm = new FestivAndes(getPath());
+		ListaRFC4 rfc4;
+		try {
+			rfc4 = tm.darRFC4();
+			System.out.println("lol4");
+			
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(rfc4).build();
 	}
 }

@@ -16,6 +16,8 @@ import dao.DAOFunciones;
 import dao.DAOPreferencias;
 import dao.DAORFC1;
 import dao.DAORFC2;
+import dao.DAORFC3;
+import dao.DAORFC4;
 import dao.DAOTablaVideos;
 import dao.DAOUsuarios;
 
@@ -24,6 +26,8 @@ import vos.ListaVideos;
 import vos.Preferencia;
 import vos.RFC1;
 import vos.RFC2;
+import vos.RFC3;
+import vos.RFC4;
 import vos.Boleta;
 import vos.Cliente;
 import vos.Compania;
@@ -34,6 +38,8 @@ import vos.ListaFunciones;
 import vos.ListaPreferencias;
 import vos.ListaRFC1;
 import vos.ListaRFC2;
+import vos.ListaRFC3;
+import vos.ListaRFC4;
 import vos.ListaUsuarios;
 import vos.Usuario;
 import vos.Video;
@@ -829,9 +835,69 @@ public class FestivAndes {
 		return new ListaRFC2(rfc2);
 	}
 
+	public ListaRFC3 darRFC3() throws Exception {
+		ArrayList<RFC3> rfc3;
+		DAORFC3 daorfc3s = new DAORFC3();
+		try 
+		{
+			//////Transacción
+			this.conn = darConexion();
+			daorfc3s.setConn(conn);
+			rfc3 = daorfc3s.darRFC3();
 
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daorfc3s.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return new ListaRFC3(rfc3);
+	}
 
+	public ListaRFC4 darRFC4() throws Exception {
+		ArrayList<RFC4> rfc4;
+		DAORFC4 daorfc4s = new DAORFC4();
+		try 
+		{
+			//////Transacción
+			this.conn = darConexion();
+			daorfc4s.setConn(conn);
+			rfc4 = daorfc4s.darRFC4();
 
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daorfc4s.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return new ListaRFC4(rfc4);
+	}
 }
 
 

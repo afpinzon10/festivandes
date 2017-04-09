@@ -51,13 +51,16 @@ public class BoletaServices {
 		
 		@PUT
 		@Path("/comprar")
-		@Consumes(MediaType.APPLICATION_JSON)
-		@Produces(MediaType.APPLICATION_JSON)
-		public Response addBoleta(Boleta boleta) {
+		@Consumes({MediaType.APPLICATION_JSON})
+		@Produces({MediaType.APPLICATION_JSON})
+		public Response addBoleta(ListaBoletas boleta) {
 			
 			FestivAndes tm = new FestivAndes(getPath());
 			try {
-				tm.addBoleta(boleta);
+				for (Boleta b : boleta.getBoletas()) {
+					tm.addBoleta(b);
+				}
+				
 			} catch (Exception e) {
 				return Response.status(500).entity(doErrorMessage(e)).build();
 			}

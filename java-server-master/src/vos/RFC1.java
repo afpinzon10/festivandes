@@ -49,8 +49,8 @@ public class RFC1 {
 	@JsonProperty(value="idespacio")
 	private int idespacio;
 	
-	@JsonProperty(value="idcategoria")
-	private int idcategoria;
+	@JsonProperty(value="idfuncion")
+	private int idfuncion;
 	
 	@JsonProperty(value="descripcion")
 	private String descripcion;
@@ -99,8 +99,8 @@ public class RFC1 {
 	@JsonProperty(value="idespacio")
 	 int idespacio,
 	
-	@JsonProperty(value="idcategoria")
-	 int idcategoria,
+	@JsonProperty(value="idfuncion")
+	 int idfuncion,
 	
 	@JsonProperty(value="descripcion")
 	 String descripcion) {
@@ -119,7 +119,7 @@ public class RFC1 {
 		this.traduccion = traduccion;
 		this.fecha = fecha;
 		this.idespacio = idespacio;
-		this.idcategoria = idcategoria;
+		this.idfuncion = idfuncion;
 		this.descripcion = descripcion;
 	}
 
@@ -294,13 +294,13 @@ public class RFC1 {
 
 
 	public int getIdcategoria() {
-		return idcategoria;
+		return idfuncion;
 	}
 
 
 
 	public void setIdcategoria(int idcategoria) {
-		this.idcategoria = idcategoria;
+		this.idfuncion = idcategoria;
 	}
 
 
