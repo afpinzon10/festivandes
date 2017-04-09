@@ -28,6 +28,7 @@ import vos.RFC1;
 import vos.RFC2;
 import vos.RFC3;
 import vos.RFC4;
+import vos.Abono;
 import vos.Boleta;
 import vos.Cliente;
 import vos.Compania;
@@ -532,14 +533,78 @@ public class FestivAndes {
 			}
 		}
 	}
+	
+	
 
 
 
 
 
 
+	//-----------------------------------------------------
+	// ITERACION 3
+	//----------------------------------------------------
 
 
+	public void addAbono(Abono abono) throws Exception {
+		DAOPreferencias daoPreferencias = new DAOPreferencias();
+		try 
+		{
+			//////Transacción
+			this.conn = darConexion();
+			daoAbono.setConn(conn);
+			daoAbono.addAbono(abono);
+			conn.commit();
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoAbono.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	public void deletePreferencia(Preferencia preferencia, String idUsuario, String idCliente) throws Exception {
+		DAOPreferencias daoPreferencias = new DAOPreferencias();
+		try 
+		{
+			//////Transacción
+			this.conn = darConexion();
+			daoPreferencias.setConn(conn);
+			daoPreferencias.deletePreferencia(preferencia, idUsuario, idCliente);
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoPreferencias.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
 
 
 
