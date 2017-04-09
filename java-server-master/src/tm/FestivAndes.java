@@ -221,6 +221,36 @@ public class FestivAndes {
 			}
 		}
 	}
+	
+	public void deleteBoleta(Boleta boleta) throws Exception {
+		DAOBoletas daoBoletas = new DAOBoletas();
+		try 
+		{
+			//////Transacción
+			this.conn = darConexion();
+			daoBoletas.setConn(conn);
+			daoBoletas.deleteBoleta(boleta);
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoBoletas.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
 
 	public ListaPreferencias darPreferencias(String idUsuario, String idCliente) throws Exception {
 		ArrayList<Preferencia> preferencias;

@@ -121,4 +121,15 @@ public class DAOBoletas {
 		return true;
 		
 	}
+	
+	public void deleteBoleta(Boleta boleta) throws SQLException{
+		String sql = "DELETE FROM BOLETA WHERE IDBOLETA ="+boleta.getIdboleta();
+		
+		
+		System.out.println("SQL stmt    deleteBoleta:" + sql);
+		
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
+	}
 }
