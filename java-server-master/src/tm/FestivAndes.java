@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import dao.DAOAbono;
 import dao.DAOBoletas;
 import dao.DAOClientes;
 import dao.DAOCompanias;
@@ -547,7 +548,7 @@ public class FestivAndes {
 
 
 	public void addAbono(Abono abono) throws Exception {
-		DAOPreferencias daoPreferencias = new DAOPreferencias();
+		DAOAbono daoAbono = new DAOAbono();
 		try 
 		{
 			//////Transacción
@@ -576,14 +577,14 @@ public class FestivAndes {
 			}
 		}
 	}
-	public void deletePreferencia(Preferencia preferencia, String idUsuario, String idCliente) throws Exception {
-		DAOPreferencias daoPreferencias = new DAOPreferencias();
+	public void deleteAbono(Abono abono) throws Exception {
+		DAOAbono daoAbono = new DAOAbono();
 		try 
 		{
 			//////Transacción
 			this.conn = darConexion();
-			daoPreferencias.setConn(conn);
-			daoPreferencias.deletePreferencia(preferencia, idUsuario, idCliente);
+			daoAbono.setConn(conn);
+			daoAbono.deleteAbono(abono);
 
 		} catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
@@ -595,7 +596,7 @@ public class FestivAndes {
 			throw e;
 		} finally {
 			try {
-				daoPreferencias.cerrarRecursos();
+				daoAbono.cerrarRecursos();
 				if(this.conn!=null)
 					this.conn.close();
 			} catch (SQLException exception) {
