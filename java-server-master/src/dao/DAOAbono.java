@@ -79,4 +79,16 @@ public class DAOAbono {
 	}
 
 
+	
+	public void deleteAbono(Abono abono) throws SQLException{
+		String sql = "DELETE FROM ABONO WHERE IDABONO ="+abono.getIdabono();
+		
+		
+		System.out.println("SQL stmt    deleteAbono:" + sql);
+		
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
+	}
+
 }
