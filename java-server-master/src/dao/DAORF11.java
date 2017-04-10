@@ -2,12 +2,14 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import vos.Abono;
 import vos.Boleta;
 import vos.ListaBoletas;
+import vos.RF10;
 
 public class DAORF11 {
 
@@ -37,14 +39,29 @@ public class DAORF11 {
 		this.conn = con;
 	}
 	
-	public void addBoletasAbonadas(RF10 rf10, int idAbono){
-		DAOBoletas dao = new DAOBoletas();
-		ListaBoletas lis= dao.addmuchasboletas(rf10);
-		
-		for (Boleta b : lis.getBoletas()) {
+	public void addBoletaAbonada(int idAbono, int idboleta) throws SQLException{
+
 			String sql = "INSERT INTO BOLETASABONADAS VALUES (";
 			sql += idAbono + ",";
-			sql += b.getIdboleta() + ")";
+			sql += idboleta + ")";
+			PreparedStatement prepStmt = conn.prepareStatement(sql);
+			recursos.add(prepStmt);
+			prepStmt.executeQuery();
+	}
+
+	public int esAbono(RF10 lasBoletas) throws SQLException {
+		String sql = "SELECT IDABONO FROM ABONO WHERE " + lasBoletas.getIdcliente() + " = IDCLIENTE AND " + lasBoletas.getIdfuncion() + " = IDFUNCION AND " + lasBoletas.getIdlocalidad() + " = IDLOCALIDAD";
+		System.out.println("SQL stmt:" + sql);
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		int num =0;
+
+		while(rs.next()){
+			 num = rs.getInt(1);
 		}
+				
+				
+		return num;
 	}
 }

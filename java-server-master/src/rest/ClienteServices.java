@@ -14,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import tm.FestivAndes;
+import vos.Abono;
 import vos.Cliente;
 
 @Path("")
@@ -37,7 +38,7 @@ public class ClienteServices
 	
 	@GET
 	@Path("usuarios/{idUsuario}/clientes")
-	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response darClientesUsuario(@PathParam("idUsuario") String id)
 	{
 		System.out.println("prueba");
@@ -57,7 +58,7 @@ public class ClienteServices
 	
 	@GET
 	@Path("clientes")
-	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response darClientes()
 	{
 		FestivAndes tm = new FestivAndes(getPath());
@@ -87,6 +88,22 @@ public class ClienteServices
 		return Response.status(200).entity(c).build();
 	}
 	
+	@GET
+	@Path("usuarios/{idusuario}/clientes")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response darAbonos(@PathParam("idUsuario") int usuario){
+		FestivAndes tm = new FestivAndes(getPath());
+		ArrayList<Abono> abonos = new ArrayList<Abono>();
+		try
+		{
+			//clientes = tm.darClientes();
+		}
+		catch(Exception e)
+		{
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(abonos).build();
+	}
 
 }
 	

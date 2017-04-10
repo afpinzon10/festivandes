@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Properties;
 
 import dao.DAOAbono;
@@ -15,6 +16,7 @@ import dao.DAOCompanias;
 import dao.DAOEspacios;
 import dao.DAOFunciones;
 import dao.DAOPreferencias;
+import dao.DAORF11;
 import dao.DAORFC1;
 import dao.DAORFC2;
 import dao.DAORFC3;
@@ -997,14 +999,16 @@ public class FestivAndes {
 	}
 
 
-	public void addMuchasBoletas(RF10 lasBoletas) throws Exception {
-		ArrayList<RFC1> rfc1;
+	public ListaBoletas addMuchasBoletas(RF10 lasBoletas) throws Exception {
+		ArrayList<Boleta> listaBoletas = new ArrayList<>();
 		DAOBoletas daoBoletas = new DAOBoletas();
-
+		DAORF11 daorf11 = new DAORF11();
+		int abono;
 		try 
 		{
-
+			
 			this.conn = darConexion();
+			
 			daoBoletas.setConn(conn);
 			int restante =daoBoletas.darCapacidadRestante(lasBoletas.getIdlocalidad(), lasBoletas.getIdfuncion());
 			
@@ -1017,10 +1021,21 @@ public class FestivAndes {
 				
 				for (int i =0; i< lasBoletas.getnumBoletas(); i++){
 					Boleta b = new Boleta(nextId, lasBoletas.getIdlocalidad(), "A", ""+nextSilla, lasBoletas.getIdfuncion(),lasBoletas.getIdcliente());
+					
 					addBoleta(b);
+					listaBoletas.add(b);
 				
 				}
 			}
+			daorf11.setConn(conn);
+			abono = daorf11.esAbono(lasBoletas);
+			if(abono != 0){
+				for (Boleta boleta : listaBoletas) {
+					daorf11.addBoletaAbonada(boleta.getIdboleta(), abono);
+				}
+			}
+			return new ListaBoletas(listaBoletas);
+			
 
 		} catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
@@ -1045,7 +1060,36 @@ public class FestivAndes {
 		
 		
 	}
+	
+	public void devolverBoleta(Boleta boleta) {
+		// TODO Auto-generated method stub
+		DAOFunciones daofunciones = new DAOFunciones();
+		java.sql.Timestamp ts;
+		try {
+			ts = daofunciones.darFechaFuncion(boleta.getIdfuncion());
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(ts);
+		
+			Calendar now = Calendar.getInstance();
+			now.setTime(now.getTime());
+			now.add(Calendar.DAY_OF_WEEK, 5);
+				
+			if 	(cal.before(now)){
+				deleteBoleta(boleta);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+				
+		
+	
 }
 
 
 
+}
