@@ -25,6 +25,7 @@ import dao.DAOUsuarios;
 
 import vos.ListaVideos;
 import vos.Preferencia;
+import vos.RF10;
 import vos.RFC1;
 import vos.RFC2;
 import vos.RFC3;
@@ -993,6 +994,56 @@ public class FestivAndes {
 			}
 		}
 		return new ListaRFC4(rfc4);
+	}
+
+
+	public void addMuchasBoletas(RF10 lasBoletas) throws Exception {
+		ArrayList<RFC1> rfc1;
+		DAOBoletas daoBoletas = new DAOBoletas();
+
+		try 
+		{
+
+			this.conn = darConexion();
+			daoBoletas.setConn(conn);
+			int restante =daoBoletas.darCapacidadRestante(lasBoletas.getIdlocalidad(), lasBoletas.getIdfuncion());
+			
+			if (restante < lasBoletas.getnumBoletas()){
+				throw new Exception("No hay suficientes espacios dispobnibles");
+			}else{
+				
+				int nextId = daoBoletas.darBoletaQueSigue()+1;
+				int nextSilla = daoBoletas.darSillaQueSigue(lasBoletas.getIdlocalidad(), lasBoletas.getIdfuncion())+1;
+				
+				for (int i =0; i< lasBoletas.getnumBoletas(); i++){
+					Boleta b = new Boleta(nextId, lasBoletas.getIdlocalidad(), "A", ""+nextSilla, lasBoletas.getIdfuncion(),lasBoletas.getIdcliente());
+					addBoleta(b);
+				
+				}
+			}
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoBoletas.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		
+		
+		
 	}
 }
 
