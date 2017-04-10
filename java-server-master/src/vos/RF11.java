@@ -2,8 +2,7 @@ package vos;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class Abono {
-
+public class RF11 {
 	@JsonProperty(value="idabono")
 	private int idabono;
 	
@@ -15,27 +14,14 @@ public class Abono {
 	
 	@JsonProperty(value="idcliente")
 	private int idcliente;
-	
-	@JsonProperty(value="precio")
-	private int precio;
 
-	public Abono(@JsonProperty(value="idabono") int idabono, @JsonProperty(value="idfuncion") int idfuncion, 
-			@JsonProperty(value="idlocalidad") int idlocalidad, @JsonProperty(value="idcliente") int idcliente, 
-			@JsonProperty(value="precio") int precio) {
+	public RF11(@JsonProperty(value="idabono") int idabono, @JsonProperty(value="idfuncion") int idfuncion, 
+			@JsonProperty(value="idlocalidad") int idlocalidad, @JsonProperty(value="idcliente") int idcliente) {
 		super();
 		this.idabono = idabono;
 		this.idfuncion = idfuncion;
 		this.idlocalidad = idlocalidad;
 		this.idcliente = idcliente;
-		this.precio = precio;
-	}
-
-	public int getPrecio() {
-		return precio;
-	}
-
-	public void setPrecio(int precio) {
-		this.precio = precio;
 	}
 
 	public int getIdabono() {
@@ -69,5 +55,6 @@ public class Abono {
 	public void setIdcliente(int idcliente) {
 		this.idcliente = idcliente;
 	}
-
+	
+	
 }

@@ -55,21 +55,21 @@ public class DAOAbono {
 			int idFuncion = rs.getInt(2);
 			int idLocalidad = rs.getInt(3);	
 			int idCliente = rs.getInt(4);
+			int precio = rs.getInt(5);
 			
-			abonos.add(new Abono(idAbono, idFuncion, idLocalidad, idCliente));
+			abonos.add(new Abono(idAbono, idFuncion, idLocalidad, idCliente, precio));
 		
 		}
-		
-	System.out.println("HAY BOLETAS "+ abonos.size());
 		return abonos;
 	}
 	
 	public void addAbono(Abono abono) throws SQLException{
 		String sql = "INSERT INTO ABONO VALUES (";
 		sql += abono.getIdabono() + ",";
-		sql += abono.getIdfuncion() + ",'";
-		sql += abono.getIdlocalidad() + ",'";
-		sql += abono.getIdcliente() + ")";
+		sql += abono.getIdfuncion() + ",";
+		sql += abono.getIdlocalidad() + ",";
+		sql += abono.getIdcliente() + ",";
+		sql += abono.getPrecio() + ")";
 		
 		System.out.println("SQL stmt    addAbono:" + sql);
 		
@@ -90,5 +90,7 @@ public class DAOAbono {
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 	}
+	
+	
 
 }
