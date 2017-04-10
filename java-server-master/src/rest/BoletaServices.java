@@ -75,15 +75,15 @@ public class BoletaServices {
 		public Response addMuchasBoletas(RF10 lasBoletas) {
 			
 			FestivAndes tm = new FestivAndes(getPath());
+			ListaBoletas boletas;
 			try {
 				
-					tm.addMuchasBoletas(lasBoletas);
-				}
-				
+					boletas = tm.addMuchasBoletas(lasBoletas);
 			} catch (Exception e) {
 				return Response.status(500).entity(doErrorMessage(e)).build();
 			}
-			return Response.status(200).entity(boleta).build();
+			
+			return Response.status(200).entity(boletas).build();
 		}
 }
 
