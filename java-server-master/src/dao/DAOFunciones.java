@@ -117,5 +117,21 @@ private ArrayList<Object> recursos;
 		return Funciones;
 	}
 	
+	public Timestamp darFechaFuncion(int idfuncion) throws SQLException{
+		String sql = "SELECT fecha FROM FUNCION WHERE IDFUNCION = "+idfuncion;
+		System.out.println(sql);
+		
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+
+		Timestamp ts= null;
+		
+		while (rs.next()) {
+			ts = rs.getTimestamp(1);
+		}
+		
+		return ts;
+	}
 
 }

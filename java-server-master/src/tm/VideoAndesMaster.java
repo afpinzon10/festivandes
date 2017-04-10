@@ -20,6 +20,7 @@ import java.util.Properties;
 
 import dao.DAOTablaVideos;
 import vos.Video;
+import vos.Boleta;
 import vos.ListaVideos;
 
 /**
@@ -373,5 +374,7 @@ public class VideoAndesMaster {
 		}
 		return new ListaVideos(videos);
 	}
+
+	
 	
 }
