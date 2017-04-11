@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 
+import vos.Abono;
 import vos.Espacio;
 import vos.Funcion;
 
@@ -132,6 +133,17 @@ private ArrayList<Object> recursos;
 		}
 		
 		return ts;
+	}
+	
+	public void deleteFuncion(Funcion funcion) throws SQLException{
+		String sql = "DELETE FROM FUNCION WHERE IDABONO ="+funcion.getIdfuncion();
+		
+		
+		System.out.println("SQL stmt    deleteFuncion:" + sql);
+		
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
 	}
 
 }
