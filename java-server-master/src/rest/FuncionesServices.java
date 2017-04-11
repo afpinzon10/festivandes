@@ -84,15 +84,14 @@ public class FuncionesServices {
 		
 		
 		@DELETE
-		@Path("")
+		@Path("/cancelar")
 		@Produces(MediaType.APPLICATION_JSON)
 		@Consumes(MediaType.APPLICATION_JSON)
-		public Response cancelarFuncion(@PathParam("idUsuario") int usuario, Abono b){
+		public Response cancelarFuncion(int idFuncion){
 			Abono ab = null;
 			try {
 				FestivAndes tm = new FestivAndes(getPath());
-				ab = new Abono(b.getIdabono(), b.getIdfuncion(), b.getIdlocalidad(), usuario, b.getPrecio());
-				tm.devolverFuncion(ab);
+				tm.cancelarFuncion(idFuncion);
 			} catch (Exception e) {
 				return Response.status(500).entity(doErrorMessage(e)).build();
 			}
