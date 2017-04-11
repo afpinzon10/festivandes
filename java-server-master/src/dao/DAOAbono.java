@@ -40,10 +40,10 @@ public class DAOAbono {
 		this.conn = con;
 	}
 
-	public ArrayList<Abono> darAbonos() throws SQLException
+	public ArrayList<Abono> darAbonos(int idcliente) throws SQLException
 	{
 		ArrayList<Abono> abonos  = new ArrayList<Abono>();
-		String sql = "SELECT * FROM ABONO";
+		String sql = "SELECT * FROM ABONO WHERE IDCLIENTE = " + idcliente;
 
 		System.out.println("SQL stmt:" + sql);
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
@@ -57,9 +57,8 @@ public class DAOAbono {
 			int idFuncion = rs.getInt(2);
 			int idLocalidad = rs.getInt(3);	
 			int idCliente = rs.getInt(4);
-			int precio = rs.getInt(5);
 
-			abonos.add(new Abono(idAbono, idFuncion, idLocalidad, idCliente, precio));
+			abonos.add(new Abono(idAbono, idFuncion, idLocalidad, idCliente));
 
 		}
 		return abonos;
@@ -95,7 +94,7 @@ public class DAOAbono {
 
 	public ListaBoletas darBoletas(Abono abono) throws SQLException {
 		ArrayList<Boleta> boletas  = new ArrayList<Boleta>();
-		String sql = "SELECT BOLETA.* FROM (SELECT IDBOLETA FROM ABONO NATURAL JOIN BOLETASABONADAS WHERE IDABONO = " + abono.getIdabono() + " )T1 INNER JOIN BOLETA ON T1.IDBOLETA = BOLETA.IDBOLETA";
+		String sql = "SELECT BOLETA.* FROM (SELECT IDBOLETA FROM ABONO NATURAL JOIN BOLETASABONADAS WHERE IDCLIENTE = " + abono.getIdabono() + " )T1 INNER JOIN BOLETA ON T1.IDBOLETA = BOLETA.IDBOLETA";
 
 		System.out.println("SQL stmt:" + sql);
 		PreparedStatement prepStmt = conn.prepareStatement(sql);

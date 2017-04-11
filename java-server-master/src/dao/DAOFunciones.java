@@ -149,7 +149,7 @@ private ArrayList<Object> recursos;
 	
 	
 	public ListaFunciones2 RFC7(int idcliente) throws SQLException{
-		String sql = "SELECT FUNCION.* FROM (SELECT * FROM FUNCION NATURAL JOIN BOLETA WHERE REALIZADO = 1)T1 INNER JOIN CLIENTE ON T1.IDCLIENTE = " + idcliente;
+		String sql = "SELECT DISTINCT IDFUNCION, FECHA, IDESPACIO, IDOBRA, REALIZADO FROM (SELECT * FROM FUNCION NATURAL JOIN BOLETA WHERE REALIZADO = 1)T1 INNER JOIN CLIENTE ON T1.IDCLIENTE = " + idcliente;
 		
 		
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
@@ -169,7 +169,7 @@ private ArrayList<Object> recursos;
 		}
 		
 		
-		sql = "SELECT FUNCION.* FROM (SELECT * FROM FUNCION NATURAL JOIN BOLETA WHERE REALIZADO = 0)T1 INNER JOIN CLIENTE ON T1.IDCLIENTE = " + idcliente;
+		sql = "SELECT DISTINCT IDFUNCION, FECHA, IDESPACIO, IDOBRA, REALIZADO FROM (SELECT * FROM FUNCION NATURAL JOIN BOLETA WHERE REALIZADO = 0)T1 INNER JOIN CLIENTE ON T1.IDCLIENTE = " + idcliente;
 		System.out.println(sql);
 		prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -184,7 +184,7 @@ private ArrayList<Object> recursos;
 			Funciones2.add(new Funcion( idFuncion, fecha, idEspacio, idObra,realizado));
 		}
 		
-		sql = "SELECT FUNCION.* FROM (SELECT * FROM FUNCION NATURAL JOIN BOLETASCANCELADAS)T1 INNER JOIN CLIENTE ON T1.IDCLIENTE = " + idcliente;
+		sql = "SELECT DISTINCT IDFUNCION, FECHA, IDESPACIO, IDOBRA, REALIZADO FROM (SELECT * FROM FUNCION NATURAL JOIN BOLETASCANCELADAS)T1 INNER JOIN CLIENTE ON T1.IDCLIENTE = " + idcliente;
 		System.out.println(sql);
 		prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);

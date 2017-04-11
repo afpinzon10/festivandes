@@ -1069,7 +1069,7 @@ public class FestivAndes {
 	}
 
 
-	public ListaAbonos darAbonos() {
+	public ListaAbonos darAbonos(int idcliente) {
 		ArrayList<Abono> abono = new ArrayList<>();
 		DAOAbono daoAbono = new DAOAbono();
 		try 
@@ -1077,7 +1077,7 @@ public class FestivAndes {
 			//////Transacción
 			this.conn = darConexion();
 			daoAbono.setConn(conn);
-			abono = daoAbono.darAbonos();
+			abono = daoAbono.darAbonos(idcliente);
 
 		} catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
@@ -1181,7 +1181,7 @@ public class FestivAndes {
 	}
 
 
-	public ListaFunciones2 darRFC7(int idcliente) {
+	public ListaFunciones2 darRFC7(int idcliente) throws SQLException {
 		// TODO Auto-generated method stub
 		
 		DAOFunciones daoFunciones = new DAOFunciones();
@@ -1190,11 +1190,8 @@ public class FestivAndes {
 		{
 			//////Transacción - ACID Example
 			this.conn = darConexion();
-			conn.setAutoCommit(false);
 			daoFunciones.setConn(conn);
 			lf2=daoFunciones.RFC7(idcliente);
-			
-			conn.commit();
 		} catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
 			e.printStackTrace();
@@ -1205,7 +1202,6 @@ public class FestivAndes {
 			throw e;
 		} finally {
 			try {
-				daoAbono.cerrarRecursos();
 				if(this.conn!=null)
 					this.conn.close();
 			} catch (SQLException exception) {
@@ -1216,6 +1212,12 @@ public class FestivAndes {
 		}
 		
 		return lf2;
+	}
+
+
+	public void cancelarFuncion(int idFuncion) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

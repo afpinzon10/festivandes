@@ -7,6 +7,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -93,14 +94,14 @@ public class ClienteServices
 	}
 	
 	@GET
-	@Path("usuarios/{idusuario}/clientes")
+	@Path("clientes/{idcliente}/abonos")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response darAbonos(@PathParam("idUsuario") int usuario){
+	public Response darAbonos(@PathParam("idcliente") int idcliente){
 		FestivAndes tm = new FestivAndes(getPath());
 		ListaAbonos abonos;
 		try
 		{
-			abonos = tm.darAbonos();
+			abonos = tm.darAbonos(idcliente);
 		}
 		catch(Exception e)
 		{
@@ -109,15 +110,15 @@ public class ClienteServices
 		return Response.status(200).entity(abonos).build();
 	}
 
-	@POST
-	@Path("usuarios/{idusuario}/clientes")
+	@PUT
+	@Path("clientes/{idcliente}/abonos")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response registrarAbono(@PathParam("idUsuario") int usuario, Abono b){
+	public Response registrarAbono(@PathParam("idcliente") int usuario, Abono b){
 		Abono ab = null;
 		try {
 			FestivAndes tm = new FestivAndes(getPath());
-			ab = new Abono(b.getIdabono(), b.getIdfuncion(), b.getIdlocalidad(), usuario, b.getPrecio());
+			ab = new Abono(b.getIdabono(), b.getIdfuncion(), b.getIdlocalidad(), usuario);
 			tm.registrarAbono(ab);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
@@ -127,14 +128,14 @@ public class ClienteServices
 	}
 	
 	@DELETE
-	@Path("usuarios/{idusuario}/clientes")
+	@Path("clientes/{idcliente}/abonos")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response devolverAbono(@PathParam("idUsuario") int usuario, Abono b){
+	public Response devolverAbono(@PathParam("idcliente") int usuario, Abono b){
 		Abono ab = null;
 		try {
 			FestivAndes tm = new FestivAndes(getPath());
-			ab = new Abono(b.getIdabono(), b.getIdfuncion(), b.getIdlocalidad(), usuario, b.getPrecio());
+			ab = new Abono(b.getIdabono(), b.getIdfuncion(), b.getIdlocalidad(), usuario);
 			tm.devolverAbono(ab);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
@@ -144,7 +145,7 @@ public class ClienteServices
 	}
 	
 	@GET
-	@Path("clientes/{idcliente}")
+	@Path("clientes/{idcliente}/asistencia")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response RFC7(@PathParam("idcliente") int idcliente){
 		FestivAndes tm = new FestivAndes(getPath());
@@ -157,7 +158,7 @@ public class ClienteServices
 		{
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		return Response.status(200).entity(abonos).build();
+		return Response.status(200).entity(funciones).build();
 	}
 
 	
