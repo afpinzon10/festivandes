@@ -1185,17 +1185,37 @@ public class FestivAndes {
 		// TODO Auto-generated method stub
 		
 		DAOFunciones daoFunciones = new DAOFunciones();
+		ListaFunciones2 lf2= null;
 		try 
 		{
 			//////Transacción - ACID Example
 			this.conn = darConexion();
 			conn.setAutoCommit(false);
 			daoFunciones.setConn(conn);
-			daoFunciones.RFC7(idcliente);
+			lf2=daoFunciones.RFC7(idcliente);
 			
 			conn.commit();
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoAbono.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
 		
-		return null;
+		return lf2;
 	}
 
 
