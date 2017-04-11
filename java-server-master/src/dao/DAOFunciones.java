@@ -12,6 +12,7 @@ import java.util.Date;
 import vos.Abono;
 import vos.Espacio;
 import vos.Funcion;
+import vos.ListaFunciones2;
 
 
 public class DAOFunciones {
@@ -144,6 +145,62 @@ private ArrayList<Object> recursos;
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
+	}
+	
+	
+	public ListaFunciones2 RFC7(int idcliente) throws SQLException{
+		String sql = "SELECT FUNCION.* FROM (SELECT * FROM FUNCION NATURAL JOIN BOLETA WHERE REALIZADO = 1)T1 INNER JOIN CLIENTE ON T1.IDCLIENTE = " + idcliente;
+		
+		
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+
+		ArrayList<Funcion> Funciones1 = new ArrayList<Funcion>();
+		ArrayList<Funcion> Funciones2 = new ArrayList<Funcion>();
+		ArrayList<Funcion> Funciones3 = new ArrayList<Funcion>();
+		while (rs.next()) {
+			int idFuncion = Integer.parseInt(rs.getString("IDFUNCION"));
+			Timestamp fecha = rs.getTimestamp("FECHA");
+			int idEspacio = Integer.parseInt(rs.getString("IDESPACIO"));
+			int idObra = Integer.parseInt(rs.getString("IDOBRA"));
+			int realizado = rs.getInt("REALIZADO");
+			Funciones1.add(new Funcion( idFuncion, fecha, idEspacio, idObra,realizado));
+		}
+		
+		
+		sql = "SELECT FUNCION.* FROM (SELECT * FROM FUNCION NATURAL JOIN BOLETA WHERE REALIZADO = 0)T1 INNER JOIN CLIENTE ON T1.IDCLIENTE = " + idcliente;
+		System.out.println(sql);
+		prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		rs = prepStmt.executeQuery();
+		
+		while (rs.next()) {
+			int idFuncion = Integer.parseInt(rs.getString("IDFUNCION"));
+			Timestamp fecha = rs.getTimestamp("FECHA");
+			int idEspacio = Integer.parseInt(rs.getString("IDESPACIO"));
+			int idObra = Integer.parseInt(rs.getString("IDOBRA"));
+			int realizado = rs.getInt("REALIZADO");
+			Funciones2.add(new Funcion( idFuncion, fecha, idEspacio, idObra,realizado));
+		}
+		
+		sql = "SELECT FUNCION.* FROM (SELECT * FROM FUNCION NATURAL JOIN BOLETASCANCELADAS)T1 INNER JOIN CLIENTE ON T1.IDCLIENTE = " + idcliente;
+		System.out.println(sql);
+		prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		rs = prepStmt.executeQuery();
+		
+		while (rs.next()) {
+			int idFuncion = Integer.parseInt(rs.getString("IDFUNCION"));
+			Timestamp fecha = rs.getTimestamp("FECHA");
+			int idEspacio = Integer.parseInt(rs.getString("IDESPACIO"));
+			int idObra = Integer.parseInt(rs.getString("IDOBRA"));
+			int realizado = rs.getInt("REALIZADO");
+			Funciones3.add(new Funcion( idFuncion, fecha, idEspacio, idObra,realizado));
+		}
+		
+		return new ListaFunciones2(Funciones1,Funciones2,Funciones3);
+	
 	}
 
 }

@@ -18,6 +18,8 @@ import tm.FestivAndes;
 import vos.Abono;
 import vos.Cliente;
 import vos.ListaAbonos;
+import vos.ListaFunciones;
+import vos.ListaFunciones2;
 
 @Path("")
 @Produces({ MediaType.APPLICATION_JSON })
@@ -140,6 +142,24 @@ public class ClienteServices
 		
 		return Response.status(200).entity(ab).build();
 	}
+	
+	@GET
+	@Path("clientes/{idcliente}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response RFC7(@PathParam("idcliente") int idcliente){
+		FestivAndes tm = new FestivAndes(getPath());
+		ListaFunciones2 funciones;
+		try
+		{
+			funciones = tm.darRFC7(idcliente);
+		}
+		catch(Exception e)
+		{
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(abonos).build();
+	}
+
 	
 }
 	

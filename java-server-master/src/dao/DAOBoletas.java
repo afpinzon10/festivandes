@@ -215,6 +215,18 @@ public class DAOBoletas {
 		
 		return precio;
 	}
-	;
+	
+	public void insertarBoletaeliminada(Boleta boleta) throws SQLException{
+		String sql = "INSERT INTO BOLETASCANCELADAS VALUES (";
+		
+		sql += boleta.getIdcliente() + ",";
+		sql += boleta.getIdfuncion() + ")";
+		
+		System.out.println("SQL stmt    addUsuario:" + sql);
+		
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
+	}
 
 }

@@ -43,6 +43,7 @@ import vos.Funcion;
 import vos.ListaAbonos;
 import vos.ListaBoletas;
 import vos.ListaFunciones;
+import vos.ListaFunciones2;
 import vos.ListaPreferencias;
 import vos.ListaRFC1;
 import vos.ListaRFC2;
@@ -1032,6 +1033,7 @@ public class FestivAndes {
 				precio+=daoboletas.darPrecioboleta(b.getIdboleta());
 				idCliente = b.getIdcliente();
 				if 	(now.getTimeInMillis() < cal.getTimeInMillis()){
+					daoboletas.insertarBoletaeliminada(b);
 					deleteBoleta(b);
 				}else{
 					throw new Exception("Solo se puede cancelar boletas si la funcion inicia 5 dias despues o mas");
@@ -1176,6 +1178,24 @@ public class FestivAndes {
 				throw exception;
 			}
 		}
+	}
+
+
+	public ListaFunciones2 darRFC7(int idcliente) {
+		// TODO Auto-generated method stub
+		
+		DAOFunciones daoFunciones = new DAOFunciones();
+		try 
+		{
+			//////Transacción - ACID Example
+			this.conn = darConexion();
+			conn.setAutoCommit(false);
+			daoFunciones.setConn(conn);
+			daoFunciones.RFC7(idcliente);
+			
+			conn.commit();
+		
+		return null;
 	}
 
 
