@@ -40,7 +40,7 @@ public class DAOBoletas {
 	public ArrayList<Boleta> darBoletas() throws SQLException
 	{
 		ArrayList<Boleta> boletas  = new ArrayList<Boleta>();
-		String sql = "SELECT IDBOLETA, IDLOCALIDAD, FILA, SILLA, IDFUNCION, IDCLIENTE FROM BOLETA;";
+		String sql = "SELECT IDBOLETA, IDLOCALIDAD, FILA, SILLA, IDFUNCION, IDCLIENTE FROM BOLETA ORDER BY IDBOLETA";
 
 		System.out.println("SQL stmt:" + sql);
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
@@ -159,6 +159,7 @@ public class DAOBoletas {
 		}
 		
 		int restantes = tot-ocupadas;
+		System.out.println(restantes);
 		return restantes;
 		
 	}
@@ -174,23 +175,29 @@ public class DAOBoletas {
 		while(rs.next()){
 			 siguiente = rs.getInt(1);
 		}
-		
+		System.out.println(siguiente);
 		return siguiente;
 	}
 	
 	public int darSillaQueSigue(int idLocalidad, int idFuncion) throws SQLException{
 		
-		String sql = "SELECT MAX(silla) FROM BOLETA WHERE IDLOCALIDAD = "+idLocalidad+ "AND IDFUNCION ="+idFuncion;
+		String sql = "SELECT MAX(silla) FROM BOLETA WHERE IDLOCALIDAD = "+idLocalidad+ " AND IDFUNCION ="+idFuncion;
 		System.out.println("SQL stmt:" + sql);
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 		int siguiente =0;
+		try {
+			while(rs.next()){
+				
+				 siguiente = Integer.parseInt(rs.getString(1));
+			}
+			System.out.println(siguiente);
+			
+		}catch (Exception e) {
 
-		while(rs.next()){
-			 siguiente = Integer.parseInt(rs.getString(1));
 		}
-		
+		System.out.println(siguiente);
 		return siguiente;
 	}
 	

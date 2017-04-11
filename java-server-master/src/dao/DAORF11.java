@@ -43,7 +43,8 @@ public class DAORF11 {
 
 			String sql = "INSERT INTO BOLETASABONADAS VALUES (";
 			sql += idAbono + ",";
-			sql += idboleta + ")";
+			sql += idboleta + ",";
+			sql += "(SELECT PRECIO FROM LOCALIDAD NATURAL JOIN BOLETA WHERE IDBOLETA = "+ idboleta +")*0.2)";
 			PreparedStatement prepStmt = conn.prepareStatement(sql);
 			recursos.add(prepStmt);
 			prepStmt.executeQuery();

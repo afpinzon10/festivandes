@@ -38,6 +38,7 @@ import vos.Cliente;
 import vos.Compania;
 import vos.Espacio;
 import vos.Funcion;
+import vos.ListaAbonos;
 import vos.ListaBoletas;
 import vos.ListaFunciones;
 import vos.ListaPreferencias;
@@ -199,11 +200,11 @@ public class FestivAndes {
 			this.conn = darConexion();
 			daoBoletas.setConn(conn);
 
-			if(daoBoletas.sillaDispoble(boleta) && daoBoletas.boletasDisponibles(boleta)){
+			//if(daoBoletas.sillaDispoble(boleta) && daoBoletas.boletasDisponibles(boleta)){
 				daoBoletas.addBoleta(boleta);
 
 
-			}
+			//}
 			conn.close();
 
 
@@ -224,7 +225,7 @@ public class FestivAndes {
 			}
 		}
 	}
-	
+
 	public void deleteBoleta(Boleta boleta) throws Exception {
 		DAOBoletas daoBoletas = new DAOBoletas();
 		try 
@@ -567,8 +568,8 @@ public class FestivAndes {
 			}
 		}
 	}
-	
-	
+
+
 
 
 
@@ -580,7 +581,7 @@ public class FestivAndes {
 	//----------------------------------------------------
 
 
-	public void addAbono(Abono abono) throws Exception {
+	public void registrarAbono(Abono abono) throws Exception {
 		DAOAbono daoAbono = new DAOAbono();
 		try 
 		{
@@ -1006,27 +1007,31 @@ public class FestivAndes {
 		int abono;
 		try 
 		{
-			
+
 			this.conn = darConexion();
-			
+
 			daoBoletas.setConn(conn);
 			int restante =daoBoletas.darCapacidadRestante(lasBoletas.getIdlocalidad(), lasBoletas.getIdfuncion());
-			
+
 			if (restante < lasBoletas.getnumBoletas()){
 				throw new Exception("No hay suficientes espacios dispobnibles");
 			}else{
-				
-				int nextId = daoBoletas.darBoletaQueSigue()+1;
-				int nextSilla = daoBoletas.darSillaQueSigue(lasBoletas.getIdlocalidad(), lasBoletas.getIdfuncion())+1;
-				
+
+				int nextId = 0;
+				int nextSilla = 0;
+
 				for (int i =0; i< lasBoletas.getnumBoletas(); i++){
+					System.out.println(i+"i");
+					nextId = daoBoletas.darBoletaQueSigue()+1;
+					nextSilla = daoBoletas.darSillaQueSigue(lasBoletas.getIdlocalidad(), lasBoletas.getIdfuncion())+1;
 					Boleta b = new Boleta(nextId, lasBoletas.getIdlocalidad(), "A", ""+nextSilla, lasBoletas.getIdfuncion(),lasBoletas.getIdcliente());
-					
+					System.out.println(b.getIdboleta()+"idboleta");
 					addBoleta(b);
 					listaBoletas.add(b);
-				
+
 				}
 			}
+			this.conn = darConexion();
 			daorf11.setConn(conn);
 			abono = daorf11.esAbono(lasBoletas);
 			if(abono != 0){
@@ -1035,7 +1040,7 @@ public class FestivAndes {
 				}
 			}
 			return new ListaBoletas(listaBoletas);
-			
+
 
 		} catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
@@ -1056,39 +1061,86 @@ public class FestivAndes {
 				throw exception;
 			}
 		}
-		
-		
-		
+
+
+
 	}
-	
-	public void devolverBoleta(Boleta boleta) {
+
+	public void devolverBoleta(Boleta boleta) throws SQLException {
 		// TODO Auto-generated method stub
 		DAOFunciones daofunciones = new DAOFunciones();
 		java.sql.Timestamp ts;
 		try {
+			this.conn = darConexion();
+			daofunciones.setConn(conn);
 			ts = daofunciones.darFechaFuncion(boleta.getIdfuncion());
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(ts);
-		
+
 			Calendar now = Calendar.getInstance();
 			now.setTime(now.getTime());
 			now.add(Calendar.DAY_OF_WEEK, 5);
-				
-			if 	(cal.before(now)){
-				deleteBoleta(boleta);
-			}
 			
+
+			if 	(now.getTimeInMillis()<cal.getTimeInMillis()){
+				
+				deleteBoleta(boleta);
+			}else{
+				throw new Exception("Solo se puede cancelar boletas si la funcion inicia 5 dias despues o mas");
+			}
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			try {
+				daofunciones.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
 		}
-				
-		
-	
-}
+
+
+
+	}
+
+
+	public ListaAbonos darAbonos() {
+		ArrayList<Abono> abono = new ArrayList<>();
+		DAOAbono daoAbono = new DAOAbono();
+		try 
+		{
+			//////Transacción
+			this.conn = darConexion();
+			daoAbono.setConn(conn);
+			abono = daoAbono.darAbonos();
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoAbono.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+			}
+		}
+		return new ListaAbonos(abono);
+	}
 
 
 

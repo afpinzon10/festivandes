@@ -16,6 +16,7 @@ import javax.ws.rs.core.Response;
 import tm.FestivAndes;
 import vos.Abono;
 import vos.Cliente;
+import vos.ListaAbonos;
 
 @Path("")
 @Produces({ MediaType.APPLICATION_JSON })
@@ -93,10 +94,10 @@ public class ClienteServices
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response darAbonos(@PathParam("idUsuario") int usuario){
 		FestivAndes tm = new FestivAndes(getPath());
-		ArrayList<Abono> abonos = new ArrayList<Abono>();
+		ListaAbonos abonos;
 		try
 		{
-			//clientes = tm.darClientes();
+			abonos = tm.darAbonos();
 		}
 		catch(Exception e)
 		{
@@ -105,5 +106,21 @@ public class ClienteServices
 		return Response.status(200).entity(abonos).build();
 	}
 
+	@POST
+	@Path("usuarios/{idusuario}/clientes")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response registrarAbono(@PathParam("idUsuario") int usuario, Abono b){
+		Abono ab = null;
+		try {
+			FestivAndes tm = new FestivAndes(getPath());
+			ab = new Abono(b.getIdabono(), b.getIdfuncion(), b.getIdlocalidad(), usuario, b.getPrecio());
+			tm.registrarAbono(ab);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		
+		return Response.status(200).entity(ab).build();
+	}
 }
 	
