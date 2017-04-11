@@ -201,5 +201,14 @@ public class DAOBoletas {
 		return siguiente;
 	}
 	
+	public int darPrecioboleta(int idBoleta){
+
+		String sql = "SELECT PRECIO FROM  BOLETA NATURAL JOIN LOCALIDAD WHERE IDBOLETA ="+idBoleta;
+		System.out.println("SQL stmt:" + sql);
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+	}
+	;
 
 }

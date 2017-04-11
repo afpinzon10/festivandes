@@ -15,6 +15,7 @@ import tm.FestivAndes;
 import tm.VideoAndesMaster;
 import vos.Boleta;
 import vos.ListaBoletas;
+import vos.NotaDebito;
 import vos.RF10;
 import vos.Video;
 
@@ -91,14 +92,15 @@ public class BoletaServices {
 		@Path("/devolverBoleta")
 		@Consumes(MediaType.APPLICATION_JSON)
 		@Produces(MediaType.APPLICATION_JSON)
-		public Response devolverBoleta(Boleta boleta) {
+		public Response devolverBoleta(ListaBoletas boletas) {
 			FestivAndes tm = new FestivAndes(getPath());
+			NotaDebito devolucion;
 			try {
-				tm.devolverBoleta(boleta);
+				devolucion =tm.devolverBoleta(boletas);
 			} catch (Exception e) {
 				return Response.status(500).entity(doErrorMessage(e)).build();
 			}
-			return Response.status(200).entity(boleta).build();
+			return Response.status(200).entity(devolucion).build();
 		}
 		
 }

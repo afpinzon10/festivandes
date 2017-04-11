@@ -26,6 +26,7 @@ import dao.DAOUsuarios;
 
 
 import vos.ListaVideos;
+import vos.NotaDebito;
 import vos.Preferencia;
 import vos.RF10;
 import vos.RFC1;
@@ -1066,9 +1067,10 @@ public class FestivAndes {
 
 	}
 
-	public void devolverBoleta(Boleta boleta) throws SQLException {
+	public NotaDebito devolverBoleta(ListaBoletas boleta) throws SQLException {
 		// TODO Auto-generated method stub
 		DAOFunciones daofunciones = new DAOFunciones();
+		DAOBoletas daoboletas = new DAOBoletas();
 		java.sql.Timestamp ts;
 		try {
 			this.conn = darConexion();
@@ -1082,9 +1084,18 @@ public class FestivAndes {
 			now.add(Calendar.DAY_OF_WEEK, 5);
 			
 
-			if 	(now.getTimeInMillis()<cal.getTimeInMillis()){
+			if 	(now.getTimeInMillis() < cal.getTimeInMillis()){
+				int precio =0;
+				int idCliente =0;
+				for (Boleta b : boleta.getBoletas()) {
+					precio+=daoboletas.darPrecioboleta(b.getIdboleta());
+					idCliente = b.getIdcliente();
+					deleteBoleta(b);
+				}
 				
-				deleteBoleta(boleta);
+				NotaDebito devolucion = new NotaDebito(precio, idCliente);
+				return devolucion;
+				
 			}else{
 				throw new Exception("Solo se puede cancelar boletas si la funcion inicia 5 dias despues o mas");
 			}
