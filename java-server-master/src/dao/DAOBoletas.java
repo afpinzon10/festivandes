@@ -201,13 +201,19 @@ public class DAOBoletas {
 		return siguiente;
 	}
 	
-	public int darPrecioboleta(int idBoleta){
+	public int darPrecioboleta(int idBoleta) throws SQLException{
 
 		String sql = "SELECT PRECIO FROM  BOLETA NATURAL JOIN LOCALIDAD WHERE IDBOLETA ="+idBoleta;
 		System.out.println("SQL stmt:" + sql);
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
+		int precio =0;
+		while(rs.next()){
+			 precio = rs.getInt(1);
+		}
+		
+		return precio;
 	}
 	;
 

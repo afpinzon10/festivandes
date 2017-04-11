@@ -93,6 +93,7 @@ public class BoletaServices {
 		@Consumes(MediaType.APPLICATION_JSON)
 		@Produces(MediaType.APPLICATION_JSON)
 		public Response devolverBoleta(ListaBoletas boletas) {
+			
 			FestivAndes tm = new FestivAndes(getPath());
 			NotaDebito devolucion;
 			try {

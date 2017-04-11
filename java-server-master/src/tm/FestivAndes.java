@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Properties;
@@ -202,7 +203,7 @@ public class FestivAndes {
 			daoBoletas.setConn(conn);
 
 			//if(daoBoletas.sillaDispoble(boleta) && daoBoletas.boletasDisponibles(boleta)){
-				daoBoletas.addBoleta(boleta);
+			daoBoletas.addBoleta(boleta);
 
 
 			//}
@@ -577,75 +578,6 @@ public class FestivAndes {
 
 
 
-	//-----------------------------------------------------
-	// ITERACION 3
-	//----------------------------------------------------
-
-
-	public void registrarAbono(Abono abono) throws Exception {
-		DAOAbono daoAbono = new DAOAbono();
-		try 
-		{
-			//////Transacción
-			this.conn = darConexion();
-			daoAbono.setConn(conn);
-			daoAbono.addAbono(abono);
-			conn.commit();
-
-		} catch (SQLException e) {
-			System.err.println("SQLException:" + e.getMessage());
-			e.printStackTrace();
-			throw e;
-		} catch (Exception e) {
-			System.err.println("GeneralException:" + e.getMessage());
-			e.printStackTrace();
-			throw e;
-		} finally {
-			try {
-				daoAbono.cerrarRecursos();
-				if(this.conn!=null)
-					this.conn.close();
-			} catch (SQLException exception) {
-				System.err.println("SQLException closing resources:" + exception.getMessage());
-				exception.printStackTrace();
-				throw exception;
-			}
-		}
-	}
-	public void deleteAbono(Abono abono) throws Exception {
-		DAOAbono daoAbono = new DAOAbono();
-		try 
-		{
-			//////Transacción
-			this.conn = darConexion();
-			daoAbono.setConn(conn);
-			daoAbono.deleteAbono(abono);
-
-		} catch (SQLException e) {
-			System.err.println("SQLException:" + e.getMessage());
-			e.printStackTrace();
-			throw e;
-		} catch (Exception e) {
-			System.err.println("GeneralException:" + e.getMessage());
-			e.printStackTrace();
-			throw e;
-		} finally {
-			try {
-				daoAbono.cerrarRecursos();
-				if(this.conn!=null)
-					this.conn.close();
-			} catch (SQLException exception) {
-				System.err.println("SQLException closing resources:" + exception.getMessage());
-				exception.printStackTrace();
-				throw exception;
-			}
-		}
-	}
-
-
-
-
-
 	/**
 	 * Método que modela la transacción que busca el/los videos en la base de datos con el nombre entra como parámetro.
 	 * @param name - Nombre del video a buscar. name != null
@@ -999,7 +931,9 @@ public class FestivAndes {
 		}
 		return new ListaRFC4(rfc4);
 	}
-
+	//-----------------------------------------------------
+	// ITERACION 3
+	//----------------------------------------------------
 
 	public ListaBoletas addMuchasBoletas(RF10 lasBoletas) throws Exception {
 		ArrayList<Boleta> listaBoletas = new ArrayList<>();
@@ -1075,30 +1009,39 @@ public class FestivAndes {
 		try {
 			this.conn = darConexion();
 			daofunciones.setConn(conn);
-			ts = daofunciones.darFechaFuncion(boleta.getIdfuncion());
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(ts);
 
-			Calendar now = Calendar.getInstance();
-			now.setTime(now.getTime());
-			now.add(Calendar.DAY_OF_WEEK, 5);
-			
 
-			if 	(now.getTimeInMillis() < cal.getTimeInMillis()){
-				int precio =0;
-				int idCliente =0;
-				for (Boleta b : boleta.getBoletas()) {
-					precio+=daoboletas.darPrecioboleta(b.getIdboleta());
-					idCliente = b.getIdcliente();
+
+
+
+			int precio =0;
+			int idCliente =0;
+
+			for (Boleta b : boleta.getBoletas()) {
+				this.conn = darConexion();
+				daofunciones.setConn(conn);
+				ts = daofunciones.darFechaFuncion(b.getIdfuncion());
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(ts);
+
+				Calendar now = Calendar.getInstance();
+				now.setTime(now.getTime());
+				now.add(Calendar.DAY_OF_WEEK, 5);
+				this.conn = darConexion();
+				daoboletas.setConn(conn);
+				precio+=daoboletas.darPrecioboleta(b.getIdboleta());
+				idCliente = b.getIdcliente();
+				if 	(now.getTimeInMillis() < cal.getTimeInMillis()){
 					deleteBoleta(b);
+				}else{
+					throw new Exception("Solo se puede cancelar boletas si la funcion inicia 5 dias despues o mas");
 				}
-				
-				NotaDebito devolucion = new NotaDebito(precio, idCliente);
-				return devolucion;
-				
-			}else{
-				throw new Exception("Solo se puede cancelar boletas si la funcion inicia 5 dias despues o mas");
 			}
+
+			NotaDebito devolucion = new NotaDebito(precio, idCliente);
+			return devolucion;
+
+
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -1117,6 +1060,7 @@ public class FestivAndes {
 				throw exception;
 			}
 		}
+		return null;
 
 
 
@@ -1151,6 +1095,87 @@ public class FestivAndes {
 			}
 		}
 		return new ListaAbonos(abono);
+	}
+
+
+
+
+
+	public void registrarAbono(Abono abono) throws Exception {
+		DAOAbono daoAbono = new DAOAbono();
+		try 
+		{
+			//////Transacción
+			this.conn = darConexion();
+			daoAbono.setConn(conn);
+			daoAbono.addAbono(abono);
+			conn.commit();
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoAbono.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+
+
+	public NotaDebito devolverAbono(Abono abono) throws Exception {
+
+		DAOAbono daoAbono = new DAOAbono();
+		this.conn = darConexion();
+		daoAbono.setConn(conn);
+		Timestamp ts = daoAbono.darFechaFestival();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(ts);
+		Calendar now = Calendar.getInstance();
+		now.setTime(now.getTime());
+		now.add(Calendar.WEEK_OF_YEAR, 3);
+		try 
+		{
+			if(now.getTimeInMillis() < cal.getTimeInMillis()){
+
+				ListaBoletas boletas = daoAbono.darBoletas(abono);
+				daoAbono.borrarRegistros(boletas);
+				NotaDebito nota = devolverBoleta(boletas);
+				daoAbono.deleteAbono(abono);
+				return nota;
+			}
+			else{
+				throw new Exception("Solo se puede cancelar abonos si el festival inicia 3 meses despues o mas");
+			}
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoAbono.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
 	}
 
 
