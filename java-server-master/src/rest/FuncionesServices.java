@@ -87,12 +87,12 @@ public class FuncionesServices {
 		@Path("")
 		@Produces(MediaType.APPLICATION_JSON)
 		@Consumes(MediaType.APPLICATION_JSON)
-		public Response devolverFuncion(@PathParam("idUsuario") int usuario, Abono b){
+		public Response cancelarFuncion(@PathParam("idUsuario") int usuario, Abono b){
 			Abono ab = null;
 			try {
 				FestivAndes tm = new FestivAndes(getPath());
 				ab = new Abono(b.getIdabono(), b.getIdfuncion(), b.getIdlocalidad(), usuario, b.getPrecio());
-				//tm.devolverFuncion(ab);
+				tm.devolverFuncion(ab);
 			} catch (Exception e) {
 				return Response.status(500).entity(doErrorMessage(e)).build();
 			}

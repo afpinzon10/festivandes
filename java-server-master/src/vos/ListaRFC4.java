@@ -6,7 +6,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 public class ListaRFC4 {
 
-	@JsonProperty(value="rfc3")
+	@JsonProperty(value="rfc4")
 	private List<RFC4> rfc4;
 	
 	public ListaRFC4( @JsonProperty(value="rfc4")List<RFC4> rfc4){
