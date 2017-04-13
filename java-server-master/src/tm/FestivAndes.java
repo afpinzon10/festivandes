@@ -944,7 +944,8 @@ public class FestivAndes {
 		int abono;
 		try 
 		{
-
+			//Transaccion
+			conn.setAutoCommit(false);
 			this.conn = darConexion();
 
 			daoBoletas.setConn(conn);
@@ -976,16 +977,19 @@ public class FestivAndes {
 					daorf11.addBoletaAbonada(boleta.getIdboleta(), abono);
 				}
 			}
+			conn.commit();
 			return new ListaBoletas(listaBoletas);
 
 
 		} catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
 			e.printStackTrace();
+			conn.rollback();
 			throw e;
 		} catch (Exception e) {
 			System.err.println("GeneralException:" + e.getMessage());
 			e.printStackTrace();
+			conn.rollback();
 			throw e;
 		} finally {
 			try {
@@ -1009,12 +1013,10 @@ public class FestivAndes {
 		DAOBoletas daoboletas = new DAOBoletas();
 		java.sql.Timestamp ts;
 		try {
+			
 			this.conn = darConexion();
+			conn.setAutoCommit(false);
 			daofunciones.setConn(conn);
-
-
-
-
 
 			int precio =0;
 			int idCliente =0;
@@ -1042,6 +1044,7 @@ public class FestivAndes {
 			}
 
 			NotaDebito devolucion = new NotaDebito(precio, idCliente);
+			conn.commit();
 			return devolucion;
 
 
@@ -1049,9 +1052,11 @@ public class FestivAndes {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			conn.rollback();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			conn.rollback();
 		}finally {
 			try {
 				daofunciones.cerrarRecursos();
@@ -1076,13 +1081,15 @@ public class FestivAndes {
 		try 
 		{
 			//////Transacción
+			conn.setAutoCommit(false);
 			this.conn = darConexion();
 			daoAbono.setConn(conn);
 			abono = daoAbono.darAbonos(idcliente);
-
+			conn.commit();
 		} catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
 			e.printStackTrace();
+			
 		} catch (Exception e) {
 			System.err.println("GeneralException:" + e.getMessage());
 			e.printStackTrace();
@@ -1109,6 +1116,7 @@ public class FestivAndes {
 		try 
 		{
 			//////Transacción
+			conn.setAutoCommit(false);
 			this.conn = darConexion();
 			daoAbono.setConn(conn);
 			daoAbono.addAbono(abono);
@@ -1140,6 +1148,7 @@ public class FestivAndes {
 
 		DAOAbono daoAbono = new DAOAbono();
 		this.conn = darConexion();
+		conn.setAutoCommit(false);
 		daoAbono.setConn(conn);
 		Timestamp ts = daoAbono.darFechaFestival();
 		Calendar cal = Calendar.getInstance();
@@ -1147,6 +1156,8 @@ public class FestivAndes {
 		Calendar now = Calendar.getInstance();
 		now.setTime(now.getTime());
 		now.add(Calendar.WEEK_OF_YEAR, 3);
+		conn.commit();
+		
 		try 
 		{
 			if(now.getTimeInMillis() < cal.getTimeInMillis()){
