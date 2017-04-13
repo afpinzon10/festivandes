@@ -69,8 +69,7 @@ public class DAOAbono {
 		sql += abono.getIdabono() + ",";
 		sql += abono.getIdfuncion() + ",";
 		sql += abono.getIdlocalidad() + ",";
-		sql += abono.getIdcliente() + ",";
-		sql += abono.getPrecio() + ")";
+		sql += abono.getIdcliente() + ")";
 
 		System.out.println("SQL stmt    addAbono:" + sql);
 

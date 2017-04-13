@@ -10,8 +10,10 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import vos.Abono;
+import vos.Boleta;
 import vos.Espacio;
 import vos.Funcion;
+import vos.ListaBoletas;
 import vos.ListaFunciones2;
 
 
@@ -136,8 +138,8 @@ private ArrayList<Object> recursos;
 		return ts;
 	}
 	
-	public void deleteFuncion(Funcion funcion) throws SQLException{
-		String sql = "DELETE FROM FUNCION WHERE IDABONO ="+funcion.getIdfuncion();
+	public void deleteFuncion(int idFuncion) throws SQLException{
+		String sql = "UPDATE FUNCION SET REALIZADO = 2 WHERE IDFUNCION = " + idFuncion;
 		
 		
 		System.out.println("SQL stmt    deleteFuncion:" + sql);
@@ -201,6 +203,32 @@ private ArrayList<Object> recursos;
 		
 		return new ListaFunciones2(Funciones1,Funciones2,Funciones3);
 	
+	}
+
+	public ListaBoletas darBoletas(int idFuncion) throws SQLException {
+		ArrayList<Boleta> boletas  = new ArrayList<Boleta>();
+		String sql = "SELECT IDBOLETA, IDLOCALIDAD, FILA, SILLA, IDFUNCION, IDCLIENTE FROM BOLETA WHERE IDFUNCION = " + idFuncion;
+
+		System.out.println("SQL stmt:" + sql);
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		
+		while (rs.next())
+		{
+			
+			int idBoleta = rs.getInt(1);
+			int idLocalidad = rs.getInt(2);
+			String fila = rs.getString(3);
+			String silla = rs.getString(4);
+			idFuncion = rs.getInt(5);
+			int idCliente = rs.getInt(6);
+			boletas.add(new Boleta(idBoleta, idLocalidad, fila, silla, idFuncion, idCliente));
+		
+		}
+		
+	System.out.println("HAY BOLETAS "+ boletas.size());
+		return new ListaBoletas(boletas);
 	}
 
 }

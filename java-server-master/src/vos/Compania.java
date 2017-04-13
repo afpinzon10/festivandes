@@ -19,18 +19,18 @@ public class Compania {
 	@JsonProperty(value="email")
 	private String email;
 	
-	@JsonProperty(value="identificacion")
-	private String identificacion;
+	@JsonProperty(value="idcompania")
+	private String idcompania;
 
 	public Compania(ArrayList<Actor> actores, ArrayList<Obra> obras, @JsonProperty(value="idusuario") int idusuario, 
 			@JsonProperty(value="nombre") String nombre, @JsonProperty(value="email") String email,
-			@JsonProperty(value="identificacion") String identificacion) {
+			@JsonProperty(value="idcompania") String idcompania) {
 		this.actores = actores;
 		this.obras = obras;
 		this.idusuario = idusuario;
 		this.nombre = nombre;
 		this.email = email;
-		this.identificacion = identificacion;
+		this.idcompania = idcompania;
 	}
 
 	public ArrayList<Actor> getActores() {
@@ -73,12 +73,12 @@ public class Compania {
 		this.email = email;
 	}
 
-	public String getIdentificacion() {
-		return identificacion;
+	public String getIdcompania() {
+		return idcompania;
 	}
 
-	public void setIdentificacion(String identificacion) {
-		this.identificacion = identificacion;
+	public void setIdcompania(String idcompania) {
+		this.idcompania = idcompania;
 	}
 
 }

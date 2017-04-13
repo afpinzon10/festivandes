@@ -44,6 +44,7 @@ import vos.ListaAbonos;
 import vos.ListaBoletas;
 import vos.ListaFunciones;
 import vos.ListaFunciones2;
+import vos.ListaNotaDebito;
 import vos.ListaPreferencias;
 import vos.ListaRFC1;
 import vos.ListaRFC2;
@@ -1215,8 +1216,49 @@ public class FestivAndes {
 	}
 
 
-	public void cancelarFuncion(int idFuncion) {
-		// TODO Auto-generated method stub
+	public ListaNotaDebito cancelarFuncion(int idFuncion) throws Exception {
+		DAOFunciones daoFuncion = new DAOFunciones();
+		this.conn = darConexion();
+		daoFuncion.setConn(conn);
+		Timestamp ts = daoFuncion.darFechaFuncion(idFuncion);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(ts);
+		Calendar now = Calendar.getInstance();
+		now.setTime(now.getTime());
+		try 
+		{
+			if(now.getTimeInMillis() < cal.getTimeInMillis()){
+
+				ListaBoletas boletas = daoFuncion.darBoletas(idFuncion);
+				ArrayList<NotaDebito> notas = new ArrayList<>();
+				for (Boleta b : boletas.getBoletas()) {
+					NotaDebito nota = devolverBoleta(boletas);
+					notas.add(nota);
+				}
+				daoFuncion.deleteFuncion(idFuncion);
+				return new ListaNotaDebito(notas);
+			}
+			else{
+				throw new Exception("Solo se puede cancelar una funcion si no ha terminado");
+			}
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
 		
 	}
 
