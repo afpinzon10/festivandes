@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Savepoint;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -945,10 +946,10 @@ public class FestivAndes {
 		try 
 		{
 			//Transaccion
-			conn.setAutoCommit(false);
-			this.conn = darConexion();
 
-			daoBoletas.setConn(conn);
+			this.conn = darConexion();daoBoletas.setConn(conn);
+			conn.setAutoCommit(false);
+
 			int restante =daoBoletas.darCapacidadRestante(lasBoletas.getIdlocalidad(), lasBoletas.getIdfuncion());
 
 			if (restante < lasBoletas.getnumBoletas()){
@@ -967,9 +968,12 @@ public class FestivAndes {
 					addBoleta(b);
 					listaBoletas.add(b);
 
+
 				}
 			}
-			this.conn = darConexion();
+
+			/*this.conn = darConexion();
+			conn.setAutoCommit(false);
 			daorf11.setConn(conn);
 			abono = daorf11.esAbono(lasBoletas);
 			if(abono != 0){
@@ -977,7 +981,7 @@ public class FestivAndes {
 					daorf11.addBoletaAbonada(boleta.getIdboleta(), abono);
 				}
 			}
-			conn.commit();
+			conn.commit();*/
 			return new ListaBoletas(listaBoletas);
 
 
@@ -1013,7 +1017,7 @@ public class FestivAndes {
 		DAOBoletas daoboletas = new DAOBoletas();
 		java.sql.Timestamp ts;
 		try {
-			
+
 			this.conn = darConexion();
 			conn.setAutoCommit(false);
 			daofunciones.setConn(conn);
@@ -1044,7 +1048,6 @@ public class FestivAndes {
 			}
 
 			NotaDebito devolucion = new NotaDebito(precio, idCliente);
-			conn.commit();
 			return devolucion;
 
 
@@ -1081,15 +1084,15 @@ public class FestivAndes {
 		try 
 		{
 			//////Transacción
-			conn.setAutoCommit(false);
+			//conn.setAutoCommit(false);
 			this.conn = darConexion();
 			daoAbono.setConn(conn);
 			abono = daoAbono.darAbonos(idcliente);
-			conn.commit();
+			//conn.commit();
 		} catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
 			e.printStackTrace();
-			
+
 		} catch (Exception e) {
 			System.err.println("GeneralException:" + e.getMessage());
 			e.printStackTrace();
@@ -1116,12 +1119,20 @@ public class FestivAndes {
 		try 
 		{
 			//////Transacción
-			conn.setAutoCommit(false);
 			this.conn = darConexion();
 			daoAbono.setConn(conn);
-			daoAbono.addAbono(abono);
-			conn.commit();
-
+			Timestamp ts = daoAbono.darFechaFestival();
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(ts);
+			Calendar now = Calendar.getInstance();
+			now.setTime(now.getTime());
+			now.add(Calendar.WEEK_OF_YEAR, 3);
+			if(now.getTimeInMillis() < cal.getTimeInMillis()){
+				daoAbono.addAbono(abono);
+			}
+			else{
+				throw new Exception("Solo se puede registrar abonos si el festival inicia 3 meses despues o mas");
+			}
 		} catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
 			e.printStackTrace();
@@ -1157,7 +1168,7 @@ public class FestivAndes {
 		now.setTime(now.getTime());
 		now.add(Calendar.WEEK_OF_YEAR, 3);
 		conn.commit();
-		
+
 		try 
 		{
 			if(now.getTimeInMillis() < cal.getTimeInMillis()){
@@ -1195,7 +1206,7 @@ public class FestivAndes {
 
 	public ListaFunciones2 darRFC7(int idcliente) throws SQLException {
 		// TODO Auto-generated method stub
-		
+
 		DAOFunciones daoFunciones = new DAOFunciones();
 		ListaFunciones2 lf2= null;
 		try 
@@ -1222,7 +1233,7 @@ public class FestivAndes {
 				throw exception;
 			}
 		}
-		
+
 		return lf2;
 	}
 
@@ -1270,7 +1281,7 @@ public class FestivAndes {
 				throw exception;
 			}
 		}
-		
+
 	}
 
 

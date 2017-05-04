@@ -19,7 +19,9 @@ import vos.Abono;
 import vos.Compania;
 import vos.Funcion;
 import vos.ListaFunciones;
+import vos.ListaNotaDebito;
 import vos.ListaVideos;
+import vos.NotaDebito;
 import vos.Video;
 
 @Path("funciones")
@@ -88,10 +90,10 @@ public class FuncionesServices {
 		@Produces(MediaType.APPLICATION_JSON)
 		@Consumes(MediaType.APPLICATION_JSON)
 		public Response cancelarFuncion(Funcion func){
-			Abono ab = null;
+			ListaNotaDebito ab = null;
 			try {
 				FestivAndes tm = new FestivAndes(getPath());
-				tm.cancelarFuncion(func.getIdfuncion());
+				ab = tm.cancelarFuncion(func.getIdfuncion());
 			} catch (Exception e) {
 				return Response.status(500).entity(doErrorMessage(e)).build();
 			}

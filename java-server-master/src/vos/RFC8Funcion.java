@@ -22,24 +22,15 @@ public class RFC8Funcion {
 	
 	@JsonProperty(value="realizado")
 	private int realizado;
-	
-	@JsonProperty(value="asistenciatotal")
-	private int asistenciatotal;
-	
-	@JsonProperty(value="asistenciaregistrados")
-	private int asistenciaregistrados;
 
 	public RFC8Funcion(@JsonProperty(value="idfuncion") int idfuncion, @JsonProperty(value="fecha") Timestamp fecha, @JsonProperty(value="idespacio") int idespacio, 
-			@JsonProperty(value="idobra") int idobra, @JsonProperty(value="realizado") int realizado, @JsonProperty(value="asistenciatotal") int asistenciatotal,
-			@JsonProperty(value="asistenciaregistrados") int asistenciaregistrados) {
+			@JsonProperty(value="idobra") int idobra, @JsonProperty(value="realizado") int realizado) {
 		super();
 		this.idfuncion = idfuncion;
 		this.fecha = fecha;
 		this.idespacio = idespacio;
 		this.idobra = idobra;
 		this.realizado = realizado;
-		this.asistenciatotal = asistenciatotal;
-		this.asistenciaregistrados = asistenciaregistrados;
 	}
 
 	public int getIdfuncion() {
@@ -80,21 +71,5 @@ public class RFC8Funcion {
 
 	public void setRealizado(int realizado) {
 		this.realizado = realizado;
-	}
-
-	public int getAsistenciatotal() {
-		return asistenciatotal;
-	}
-
-	public void setAsistenciatotal(int asistenciatotal) {
-		this.asistenciatotal = asistenciatotal;
-	}
-
-	public int getAsistenciaregistrados() {
-		return asistenciaregistrados;
-	}
-
-	public void setAsistenciaregistrados(int asistenciaregistrados) {
-		this.asistenciaregistrados = asistenciaregistrados;
 	}
 }

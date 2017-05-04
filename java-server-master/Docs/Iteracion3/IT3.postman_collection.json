@@ -1,0 +1,191 @@
+{
+	"variables": [],
+	"info": {
+		"name": "IT3",
+		"_postman_id": "416a0977-0d9f-f263-0a81-711e15413097",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:9000/VideoAndes/rest/boletas/comprarBoletas",
+			"request": {
+				"url": "http://localhost:9000/VideoAndes/rest/boletas/comprarBoletas",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n      \"numBoletas\": 200,\n      \"idfuncion\": 1,\n      \"idlocalidad\": 2,\n      \"idcliente\": 1\n\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9000/VideoAndes/rest/boletas/comprarBoletas",
+			"request": {
+				"url": "http://localhost:9000/VideoAndes/rest/boletas/comprarBoletas",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n      \"numBoletas\": 200,\n      \"idfuncion\": 1,\n      \"idlocalidad\": 2,\n      \"idcliente\": 1\n\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9000/VideoAndes/rest/funciones/cancelar",
+			"request": {
+				"url": "http://localhost:9000/VideoAndes/rest/funciones/cancelar",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n      \"idfuncion\": 11,\n      \"fecha\": 1524193998000,\n      \"idespacio\": 1,\n      \"idobra\": 5,\n      \"realizado\": 0\n    }"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9000/VideoAndes/rest/clientes/1/abonos",
+			"request": {
+				"url": "http://localhost:9000/VideoAndes/rest/clientes/1/abonos",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n      \"idabono\": 6,\n      \"idfuncion\": 2,\n      \"idlocalidad\": 4,\n      \"idcliente\": 1\n    }"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9000/VideoAndes/rest/clientes/1/abonos",
+			"request": {
+				"url": "http://localhost:9000/VideoAndes/rest/clientes/1/abonos",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n      \"idabono\": 3,\n      \"idfuncion\": 2,\n      \"idlocalidad\": 1,\n      \"idcliente\": 1\n    }"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9000/VideoAndes/rest/clientes/1/abonos",
+			"request": {
+				"url": "http://localhost:9000/VideoAndes/rest/clientes/1/abonos",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n      \"idabono\": 4,\n      \"idfuncion\": 2,\n      \"idlocalidad\": 2,\n      \"idcliente\": 1\n    }"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9000/VideoAndes/rest/boletas/devolverBoleta",
+			"request": {
+				"url": "http://localhost:9000/VideoAndes/rest/boletas/devolverBoleta",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"boletas\":[\n\t\t{\n      \"idboleta\": 28,\n      \"idlocalidad\": 2,\n      \"fila\": \"A\",\n      \"silla\": \"2\",\n      \"idfuncion\": 2,\n      \"idcliente\": 1\n    }\n    ]\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9000/VideoAndes/rest/funciones/cancelar",
+			"request": {
+				"url": "http://localhost:9000/VideoAndes/rest/funciones/cancelar",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n      \"idfuncion\": 11,\n      \"fecha\": 1524193998000,\n      \"idespacio\": 1,\n      \"idobra\": 5,\n      \"realizado\": 0\n    }"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9000/VideoAndes/rest/funciones/cancelar",
+			"request": {
+				"url": "http://localhost:9000/VideoAndes/rest/funciones/cancelar",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n      \"idfuncion\": 12,\n      \"fecha\": 1524193998000,\n      \"idespacio\": 1,\n      \"idobra\": 5,\n      \"realizado\": 0\n    }"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

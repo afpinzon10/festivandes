@@ -19,7 +19,7 @@ public class RFC8 {
 	@JsonProperty(value="idcompania")
 	private int idcompania;
 
-	private ArrayList<RFC8Funcion> funciones;
+	private ArrayList<RFC8Obras> obras;
 	
 	private ArrayList<RFC8Espacio> espacios;
 
@@ -31,7 +31,7 @@ public class RFC8 {
 		this.nombre = nombre;
 		this.email = email;
 		this.idcompania = idcompania;
-		this.funciones = funciones;
+		this.obras = obras;
 		this.espacios = espacios;
 	}
 
@@ -67,12 +67,12 @@ public class RFC8 {
 		this.idcompania = idcompania;
 	}
 
-	public ArrayList<RFC8Funcion> getFunciones() {
-		return funciones;
+	public ArrayList<RFC8Obras> getObras() {
+		return obras;
 	}
 
-	public void setFunciones(ArrayList<RFC8Funcion> funciones) {
-		this.funciones = funciones;
+	public void setObras(ArrayList<RFC8Obras> obras) {
+		this.obras = obras;
 	}
 
 	public ArrayList<RFC8Espacio> getEspacios() {

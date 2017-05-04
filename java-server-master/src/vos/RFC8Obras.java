@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 public class RFC8Obras {
+	
+	private ArrayList<Funcion> funciones;
 
 	@JsonProperty(value="idobra")
 	private int idobra;
@@ -16,31 +18,50 @@ public class RFC8Obras {
 	@JsonProperty(value="duracion")
 	private int duracion;
 	
-	@JsonProperty(value="idcompania")
-	private int idcompania;
-
-	private ArrayList<RFC8Funcion> funciones;
+	@JsonProperty(value="idioma")
+	private String idioma;
 	
-	private ArrayList<RFC8Espacio> espacios;
+	@JsonProperty(value="edad")
+	private int edad;
+	
+	@JsonProperty(value="sinopsis")
+	private String sinopsis;
+	
+	@JsonProperty(value="costo")
+	private int costo;
+	
+	@JsonProperty(value="traduccion")
+	private int traduccion;
 
-	public RFC8Obras(@JsonProperty(value="idusuario") int idusuario, @JsonProperty(value="nombre") String nombre, 
-			@JsonProperty(value="email") String email, @JsonProperty(value="idcompania") int idcompania, ArrayList<RFC8Funcion> funciones,
-			ArrayList<RFC8Espacio> espacios) {
+	public RFC8Obras(ArrayList<Funcion> funciones, @JsonProperty(value="idobra") int idobra, @JsonProperty(value="nombre") String nombre, 
+			@JsonProperty(value="duracion") int duracion, @JsonProperty(value="idioma") String idioma, @JsonProperty(value="edad") int edad,
+			@JsonProperty(value="sinopsis") String sinopsis, @JsonProperty(value="costo") int costo, @JsonProperty(value="traduccion") int traduccion) {
 		super();
-		this.idusuario = idusuario;
-		this.nombre = nombre;
-		this.email = email;
-		this.idcompania = idcompania;
 		this.funciones = funciones;
-		this.espacios = espacios;
+		this.idobra = idobra;
+		this.nombre = nombre;
+		this.duracion = duracion;
+		this.idioma = idioma;
+		this.edad = edad;
+		this.sinopsis = sinopsis;
+		this.costo = costo;
+		this.traduccion = traduccion;
 	}
 
-	public int getIdusuario() {
-		return idusuario;
+	public ArrayList<Funcion> getFunciones() {
+		return funciones;
 	}
 
-	public void setIdusuario(int idusuario) {
-		this.idusuario = idusuario;
+	public void setFunciones(ArrayList<Funcion> funciones) {
+		this.funciones = funciones;
+	}
+
+	public int getIdobra() {
+		return idobra;
+	}
+
+	public void setIdobra(int idobra) {
+		this.idobra = idobra;
 	}
 
 	public String getNombre() {
@@ -51,35 +72,52 @@ public class RFC8Obras {
 		this.nombre = nombre;
 	}
 
-	public String getEmail() {
-		return email;
+	public int getDuracion() {
+		return duracion;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setDuracion(int duracion) {
+		this.duracion = duracion;
 	}
 
-	public int getIdcompania() {
-		return idcompania;
+	public String getIdioma() {
+		return idioma;
 	}
 
-	public void setIdcompania(int idcompania) {
-		this.idcompania = idcompania;
+	public void setIdioma(String idioma) {
+		this.idioma = idioma;
 	}
 
-	public ArrayList<RFC8Funcion> getFunciones() {
-		return funciones;
+	public int getEdad() {
+		return edad;
 	}
 
-	public void setFunciones(ArrayList<RFC8Funcion> funciones) {
-		this.funciones = funciones;
+	public void setEdad(int edad) {
+		this.edad = edad;
 	}
 
-	public ArrayList<RFC8Espacio> getEspacios() {
-		return espacios;
+	public String getSinopsis() {
+		return sinopsis;
 	}
 
-	public void setEspacios(ArrayList<RFC8Espacio> espacios) {
-		this.espacios = espacios;
+	public void setSinopsis(String sinopsis) {
+		this.sinopsis = sinopsis;
 	}
+
+	public int getCosto() {
+		return costo;
+	}
+
+	public void setCosto(int costo) {
+		this.costo = costo;
+	}
+
+	public int getTraduccion() {
+		return traduccion;
+	}
+
+	public void setTraduccion(int traduccion) {
+		this.traduccion = traduccion;
+	}
+
 }
