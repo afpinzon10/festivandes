@@ -34,6 +34,17 @@ public class Cliente {
 		this.email = email;
 		this.identificacion = identificacion;
 	}
+	
+
+	public Cliente( @JsonProperty(value="idusuario") int idusuario, 
+			@JsonProperty(value="nombre") String nombre, @JsonProperty(value="apellido") String apellido, 
+			@JsonProperty(value="email") String email, @JsonProperty(value="identificacion")String identificacion) {
+		this.idusuario = idusuario;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.email = email;
+		this.identificacion = identificacion;
+	}
 
 	public ArrayList<Preferencia> getPreferencias() {
 		return preferencias;

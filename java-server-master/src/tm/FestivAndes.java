@@ -17,6 +17,7 @@ import dao.DAOClientes;
 import dao.DAOCompanias;
 import dao.DAOEspacios;
 import dao.DAOFunciones;
+import dao.DAOIT4;
 import dao.DAOPreferencias;
 import dao.DAORF11;
 import dao.DAORFC1;
@@ -35,6 +36,7 @@ import vos.RFC1;
 import vos.RFC2;
 import vos.RFC3;
 import vos.RFC4;
+
 import vos.Abono;
 import vos.Boleta;
 import vos.Cliente;
@@ -43,6 +45,7 @@ import vos.Espacio;
 import vos.Funcion;
 import vos.ListaAbonos;
 import vos.ListaBoletas;
+import vos.ListaClientes;
 import vos.ListaFunciones;
 import vos.ListaFunciones2;
 import vos.ListaNotaDebito;
@@ -51,6 +54,7 @@ import vos.ListaRFC1;
 import vos.ListaRFC2;
 import vos.ListaRFC3;
 import vos.ListaRFC4;
+
 import vos.ListaUsuarios;
 import vos.Usuario;
 import vos.Video;
@@ -1284,6 +1288,131 @@ public class FestivAndes {
 
 	}
 
+
+	public ListaClientes darRFC9() throws Exception {
+		DAOIT4 daoIteracion4 = new DAOIT4();
+		ArrayList<Cliente> lit4= null;
+		try 
+		{
+			//////Transacción - ACID Example
+			this.conn = darConexion();
+			daoIteracion4.setConn(conn);
+			lit4=daoIteracion4.darRFC9();
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+
+		return new ListaClientes(lit4);
+	}
+	
+	public ListaClientes darRFC10() throws Exception {
+		DAOIT4 daoIteracion4 = new DAOIT4();
+		ArrayList<Cliente> lit4= null;
+		try 
+		{
+			//////Transacción - ACID Example
+			this.conn = darConexion();
+			daoIteracion4.setConn(conn);
+			lit4=daoIteracion4.darRFC10();
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+
+		return new ListaClientes(lit4);
+	}
+
+	
+	public ListaClientes darRFC11() throws Exception {
+		DAOIT4 daoIteracion4 = new DAOIT4();
+		ArrayList<Cliente> lit4= null;
+		try 
+		{
+			//////Transacción - ACID Example
+			this.conn = darConexion();
+			daoIteracion4.setConn(conn);
+			lit4=daoIteracion4.darRFC11();
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+
+		return new ListaClientes(lit4);
+	}
+
+	public ListaClientes darRFC12() throws Exception {
+		DAOIT4 daoIteracion4 = new DAOIT4();
+		ArrayList<Cliente> lit4= null;
+		try 
+		{
+			//////Transacción - ACID Example
+			this.conn = darConexion();
+			daoIteracion4.setConn(conn);
+			lit4=daoIteracion4.darRFC12();
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+
+		return new ListaClientes(lit4);
+	}
 
 
 }

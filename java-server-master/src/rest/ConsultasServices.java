@@ -11,10 +11,12 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import tm.FestivAndes;
+import vos.ListaClientes;
 import vos.ListaRFC1;
 import vos.ListaRFC2;
 import vos.ListaRFC3;
 import vos.ListaRFC4;
+
 import vos.ListaUsuarios;
 
 @Path("")
@@ -97,4 +99,74 @@ public class ConsultasServices {
 		}
 		return Response.status(200).entity(rfc4).build();
 	}
+	
+	
+	@GET
+	@Path("/rfc9")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getRFC9() {
+		
+		FestivAndes tm = new FestivAndes(getPath());
+		ListaClientes rfc9;
+		try {
+			rfc9 = tm.darRFC9();
+			System.out.println("lol4");
+			
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(rfc9).build();
+	}
+	
+	@GET
+	@Path("/rfc10")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getRFC10() {
+		
+		FestivAndes tm = new FestivAndes(getPath());
+		ListaClientes rfc10;
+		try {
+			rfc10 = tm.darRFC10();
+			System.out.println("lol4");
+			
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(rfc10).build();
+	}
+	
+	@GET
+	@Path("/rfc11")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getRFC11() {
+		
+		FestivAndes tm = new FestivAndes(getPath());
+		ListaClientes rfc11;
+		try {
+			rfc11 = tm.darRFC11();
+			System.out.println("lol4");
+			
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(rfc11).build();
+	}
+	
+	@GET
+	@Path("/rfc12")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getRFC12() {
+		
+		FestivAndes tm = new FestivAndes(getPath());
+		ListaClientes rfc12;
+		try {
+			rfc12 = tm.darRFC12();
+			System.out.println("lol4");
+			
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(rfc12).build();
+	}
+	
 }
