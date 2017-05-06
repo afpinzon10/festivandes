@@ -39,7 +39,7 @@ public class DAOIT4 {
 		this.conn = con;
 	}
 
-	public ArrayList<Cliente> darRFC9() throws SQLException, Exception {
+	public ArrayList<Cliente> darRFC9(int idcompania) throws SQLException, Exception {
 		
 		ArrayList<Cliente> clientesRFC9 = new ArrayList<Cliente>();
 		String sql = "SELECT DISTINCT IDCLIENTE, T3.NOMBRE,APELLIDO, T3.EMAIL, IDENTIFICACION FROM"
@@ -49,7 +49,7 @@ public class DAOIT4 {
 				+ "(SELECT IDFUNCION, IDOBRA FROM FUNCION NATURAL JOIN OBRA WHERE REALIZADO=1 AND FECHA BETWEEN '' AND '')T2"
 				+ "ON T1.IDFUNCION=T2.IDFUNCION)T3"
 				+ "INNER JOIN"
-				+ "(SELECT IDOBRA FROM COMPANIAOBRA NATURAL JOIN COMPANIA WHERE IDCOMPANIA=0)T4"
+				+ "(SELECT IDOBRA FROM COMPANIAOBRA NATURAL JOIN COMPANIA WHERE IDCOMPANIA="+idcompania+")T4"
 				+ "ON T3.IDOBRA=T4.IDOBRA"
 				+ "ORDER BY A";
 		System.out.println("RFC9"+sql);
@@ -157,16 +157,28 @@ public ArrayList<Cliente> darRFC11() throws SQLException, Exception {
 public ArrayList<Cliente> darRFC12() throws SQLException, Exception {
 	
 	ArrayList<Cliente> clientesRFC12 = new ArrayList<Cliente>();
-	String sql = "SELECT DISTINCT IDCLIENTE, T3.NOMBRE,APELLIDO, T3.EMAIL, IDENTIFICACION FROM"
-			+ "(SELECT IDCLIENTE, T1.NOMBRE, APELLIDO, EMAIL, IDENTIFICACION, IDOBRA FROM "
-			+ "(SELECT IDCLIENTE, NOMBRE, APELLIDO, EMAIL, IDENTIFICACION, IDFUNCION FROM CLIENTE NATURAL JOIN BOLETA)T1"
-			+ "INNER JOIN"
-			+ "(SELECT IDFUNCION, IDOBRA FROM FUNCION NATURAL JOIN OBRA WHERE REALIZADO=1 AND FECHA BETWEEN '' AND '')T2"
-			+ "ON T1.IDFUNCION=T2.IDFUNCION)T3"
-			+ "INNER JOIN"
-			+ "(SELECT IDOBRA FROM COMPANIAOBRA NATURAL JOIN COMPANIA WHERE IDCOMPANIA=0)T4"
-			+ "ON T3.IDOBRA=T4.IDOBRA"
-			+ "ORDER BY A;";
+	String sql = "SELECT IDCLIENTE, "
+			+ "NOMBRE, "
+			+ "APELLIDO, "
+			+ "EMAIL, "
+			+ "IDENTIFICACION FROM"
+			+ "(SELECT "
+			+ "IDCLIENTE, "
+			+ "NOMBRE, "
+			+ "APELLIDO, "
+			+ "EMAIL, "
+			+ "IDENTIFICACION, "
+			+ "COUNT(IDBOLETA) AS CONTEO"
+			+ "FROM "
+			+ "(CLIENTE "
+			+ "NATURAL JOIN "
+			+ "BOLETA "
+			+ "NATURAL JOIN "
+			+ "LOCALIDAD) "
+			+ "WHERE NOMBRELOCALIDAD = 'VIP'"
+			+ "GROUP BY IDCLIENTE, NOMBRE, APELLIDO, EMAIL, IDENTIFICACION)"
+			+ "WHERE CONTEO >= N";
+	
 	System.out.println("RFC12"+sql);
 
 	PreparedStatement prepStmt = conn.prepareStatement(sql);
