@@ -1289,7 +1289,7 @@ public class FestivAndes {
 	}
 
 
-	public ListaClientes darRFC9() throws Exception {
+	public ListaClientes darRFC9(String fecha1, String fecha2, int idcompania, String orderby) throws Exception {
 		DAOIT4 daoIteracion4 = new DAOIT4();
 		ArrayList<Cliente> lit4= null;
 		try 
@@ -1297,7 +1297,7 @@ public class FestivAndes {
 			//////Transacción - ACID Example
 			this.conn = darConexion();
 			daoIteracion4.setConn(conn);
-			lit4=daoIteracion4.darRFC9();
+			lit4=daoIteracion4.darRFC9(fecha1,fecha2,idcompania,orderby);
 		} catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
 			e.printStackTrace();
@@ -1320,7 +1320,7 @@ public class FestivAndes {
 		return new ListaClientes(lit4);
 	}
 	
-	public ListaClientes darRFC10() throws Exception {
+	public ListaClientes darRFC10(String fecha1, String fecha2, int idcompania, String orderby) throws Exception {
 		DAOIT4 daoIteracion4 = new DAOIT4();
 		ArrayList<Cliente> lit4= null;
 		try 
@@ -1328,7 +1328,7 @@ public class FestivAndes {
 			//////Transacción - ACID Example
 			this.conn = darConexion();
 			daoIteracion4.setConn(conn);
-			lit4=daoIteracion4.darRFC10();
+			lit4=daoIteracion4.darRFC10(fecha1,fecha2,idcompania,orderby);
 		} catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
 			e.printStackTrace();
@@ -1352,7 +1352,7 @@ public class FestivAndes {
 	}
 
 	
-	public ListaClientes darRFC11() throws Exception {
+	public ListaClientes darRFC11(String fecha1, String fecha2, String descripcion, String nombreLocalidad, String hora1, String hora2, String day ) throws Exception {
 		DAOIT4 daoIteracion4 = new DAOIT4();
 		ArrayList<Cliente> lit4= null;
 		try 
@@ -1360,7 +1360,7 @@ public class FestivAndes {
 			//////Transacción - ACID Example
 			this.conn = darConexion();
 			daoIteracion4.setConn(conn);
-			lit4=daoIteracion4.darRFC11();
+			lit4=daoIteracion4.darRFC11(fecha1, fecha2, descripcion, nombreLocalidad, hora1, hora2, day);
 		} catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
 			e.printStackTrace();
@@ -1383,7 +1383,7 @@ public class FestivAndes {
 		return new ListaClientes(lit4);
 	}
 
-	public ListaClientes darRFC12() throws Exception {
+	public ListaClientes darRFC12(String conteo) throws Exception {
 		DAOIT4 daoIteracion4 = new DAOIT4();
 		ArrayList<Cliente> lit4= null;
 		try 
@@ -1391,7 +1391,7 @@ public class FestivAndes {
 			//////Transacción - ACID Example
 			this.conn = darConexion();
 			daoIteracion4.setConn(conn);
-			lit4=daoIteracion4.darRFC12();
+			lit4=daoIteracion4.darRFC12(conteo);
 		} catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
 			e.printStackTrace();

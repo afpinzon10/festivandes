@@ -1,7 +1,7 @@
 package rest;
 
 import javax.servlet.ServletContext;
-
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 
 import javax.ws.rs.Path;
@@ -18,6 +18,7 @@ import vos.ListaRFC3;
 import vos.ListaRFC4;
 
 import vos.ListaUsuarios;
+import vos.Parametros;
 
 @Path("")
 @Produces({ MediaType.APPLICATION_JSON })
@@ -103,13 +104,14 @@ public class ConsultasServices {
 	
 	@GET
 	@Path("/rfc9")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getRFC9() {
+	public Response getRFC9(Parametros param) {
 		
 		FestivAndes tm = new FestivAndes(getPath());
 		ListaClientes rfc9;
 		try {
-			rfc9 = tm.darRFC9();
+			rfc9 = tm.darRFC9(param.getFecha1(), param.getFecha2(), );
 			System.out.println("lol4");
 			
 		} catch (Exception e) {
