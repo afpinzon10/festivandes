@@ -111,7 +111,8 @@ public class ConsultasServices {
 		FestivAndes tm = new FestivAndes(getPath());
 		ListaClientes rfc9;
 		try {
-			rfc9 = tm.darRFC9(param.getFecha1(), param.getFecha2(), );
+
+			rfc9 = tm.darRFC9(param.getFecha1(), param.getFecha2(), param.getIdcompania(), param.getOrderby());
 			System.out.println("lol4");
 			
 		} catch (Exception e) {
@@ -122,13 +123,14 @@ public class ConsultasServices {
 	
 	@GET
 	@Path("/rfc10")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getRFC10() {
+	public Response getRFC10(Parametros param) {
 		
 		FestivAndes tm = new FestivAndes(getPath());
 		ListaClientes rfc10;
 		try {
-			rfc10 = tm.darRFC10();
+			rfc10 = tm.darRFC10(param.getFecha1(), param.getFecha2(), param.getIdcompania(), param.getOrderby());
 			System.out.println("lol4");
 			
 		} catch (Exception e) {
@@ -139,13 +141,15 @@ public class ConsultasServices {
 	
 	@GET
 	@Path("/rfc11")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getRFC11() {
+	public Response getRFC11(Parametros param) {
 		
 		FestivAndes tm = new FestivAndes(getPath());
 		ListaClientes rfc11;
 		try {
-			rfc11 = tm.darRFC11();
+			
+			rfc11 = tm.darRFC11(param.getFecha1(), param.getFecha2(), param.getDescripcion(), param.getNombreLocalidad(), param.getHora1(), param.getHora2(), param.getDay());
 			System.out.println("lol4");
 			
 		} catch (Exception e) {
@@ -156,13 +160,14 @@ public class ConsultasServices {
 	
 	@GET
 	@Path("/rfc12")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getRFC12() {
+	public Response getRFC12(Parametros param ) {
 		
 		FestivAndes tm = new FestivAndes(getPath());
 		ListaClientes rfc12;
 		try {
-			rfc12 = tm.darRFC12();
+			rfc12 = tm.darRFC12(param.getConteo());
 			System.out.println("lol4");
 			
 		} catch (Exception e) {

@@ -134,7 +134,7 @@ public ArrayList<Cliente> darRFC11(String fecha1, String fecha2, String descripc
 			+ "AND "
 			+ "NOMBRELOCALIDAD LIKE '%"+nombreLocalidad+"%'"
 			+ "AND "
-			+ "TO_CHAR(FECHA, 'HH') BETWEEN '"+hora1+"' AND '"+hora2+"'  "
+			+ "TO_CHAR(FECHA, 'HH24') BETWEEN '"+hora1+"' AND '"+hora2+"'  "
 			+ "AND "
 			+ "TO_CHAR(FECHA, 'DAY', 'NLS_DATE_LANGUAGE=ENGLISH') = "+day+"";
 	
