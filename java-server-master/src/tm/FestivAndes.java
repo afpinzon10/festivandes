@@ -33,6 +33,7 @@ import vos.NotaDebito;
 import vos.Preferencia;
 import vos.RF10;
 import vos.RFC1;
+import vos.RFC11;
 import vos.RFC2;
 import vos.RFC3;
 import vos.RFC4;
@@ -51,6 +52,7 @@ import vos.ListaFunciones2;
 import vos.ListaNotaDebito;
 import vos.ListaPreferencias;
 import vos.ListaRFC1;
+import vos.ListaRFC11;
 import vos.ListaRFC2;
 import vos.ListaRFC3;
 import vos.ListaRFC4;
@@ -1352,9 +1354,9 @@ public class FestivAndes {
 	}
 
 	
-	public ListaClientes darRFC11(String fecha1, String fecha2, String descripcion, String nombreLocalidad, String hora1, String hora2, String day ) throws Exception {
+	public ListaRFC11 darRFC11(String fecha1, String fecha2, String descripcion, String nombreLocalidad, String hora1, String hora2, String day ) throws Exception {
 		DAOIT4 daoIteracion4 = new DAOIT4();
-		ArrayList<Cliente> lit4= null;
+		ArrayList<RFC11> lit4= null;
 		try 
 		{
 			//////Transacción - ACID Example
@@ -1380,7 +1382,7 @@ public class FestivAndes {
 			}
 		}
 
-		return new ListaClientes(lit4);
+		return new ListaRFC11(lit4);
 	}
 
 	public ListaClientes darRFC12(String conteo) throws Exception {

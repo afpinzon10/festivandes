@@ -13,6 +13,7 @@ import com.sun.jmx.remote.util.OrderClassLoaders;
 
 import vos.Cliente;
 import vos.RFC1;
+import vos.RFC11;
 
 
 public class DAOIT4 {
@@ -44,15 +45,15 @@ public class DAOIT4 {
 	public ArrayList<Cliente> darRFC9(String fecha1, String fecha2, int idcompania, String orderby) throws SQLException, Exception {
 		
 		ArrayList<Cliente> clientesRFC9 = new ArrayList<Cliente>();
-		String sql = "SELECT DISTINCT IDCLIENTE, T3.NOMBRE,APELLIDO, T3.EMAIL, IDENTIFICACION FROM"
+		String sql = " SELECT DISTINCT IDCLIENTE, T3.NOMBRE,APELLIDO, T3.EMAIL, IDENTIFICACION FROM "
 				+ "(SELECT IDCLIENTE, T1.NOMBRE, APELLIDO, EMAIL, IDENTIFICACION, IDOBRA FROM "
-				+ "(SELECT IDCLIENTE, NOMBRE, APELLIDO, EMAIL, IDENTIFICACION, IDFUNCION FROM CLIENTE NATURAL JOIN BOLETA)T1"
-				+ "INNER JOIN"
-				+ "(SELECT IDFUNCION, IDOBRA FROM FUNCION NATURAL JOIN OBRA WHERE REALIZADO=1 AND FECHA BETWEEN '"+fecha1+"' AND '"+fecha2+"')T2"
-				+ "ON T1.IDFUNCION=T2.IDFUNCION)T3"
-				+ "INNER JOIN"
-				+ "(SELECT IDOBRA FROM COMPANIAOBRA NATURAL JOIN COMPANIA WHERE IDCOMPANIA="+idcompania+")T4"
-				+ "ON T3.IDOBRA=T4.IDOBRA"
+				+ "(SELECT IDCLIENTE, NOMBRE, APELLIDO, EMAIL, IDENTIFICACION, IDFUNCION FROM CLIENTE NATURAL JOIN BOLETA)T1 "
+				+ "INNER JOIN "
+				+ "(SELECT IDFUNCION, IDOBRA FROM FUNCION NATURAL JOIN OBRA WHERE REALIZADO=1 AND FECHA BETWEEN '"+fecha1+"' AND '"+fecha2+"')T2 "
+				+ "ON T1.IDFUNCION=T2.IDFUNCION)T3 "
+				+ "INNER JOIN "
+				+ "(SELECT IDOBRA FROM COMPANIAOBRA NATURAL JOIN COMPANIA WHERE IDCOMPANIA="+idcompania+")T4 "
+				+ "ON T3.IDOBRA=T4.IDOBRA "
 				+ "ORDER BY "+orderby;
 		System.out.println("RFC9"+sql);
 
@@ -73,19 +74,19 @@ public class DAOIT4 {
 	
 public ArrayList<Cliente> darRFC10(String fecha1, String fecha2, int idcompania, String orderby) throws SQLException, Exception {
 		
-		ArrayList<Cliente> clientesRFC10 = new ArrayList<Cliente>();
-		String sql ="SELECT IDCLIENTE, NOMBRE, APELLIDO, EMAIL, IDENTIFICACION FROM CLIENTE"
-				+ "MINUS"
-				+ "SELECT DISTINCT IDCLIENTE, T3.NOMBRE,APELLIDO, T3.EMAIL, IDENTIFICACION FROM"
+		ArrayList<Cliente> clientesRFC10 = new ArrayList<Cliente>(); 
+		String sql =" SELECT IDCLIENTE, NOMBRE, APELLIDO, EMAIL, IDENTIFICACION FROM CLIENTE "
+				+ "MINUS "
+				+ "SELECT DISTINCT IDCLIENTE, T3.NOMBRE,APELLIDO, T3.EMAIL, IDENTIFICACION FROM "
 				+ "(SELECT IDCLIENTE, T1.NOMBRE, APELLIDO, EMAIL, IDENTIFICACION, IDOBRA FROM "
-				+ "(SELECT IDCLIENTE, NOMBRE, APELLIDO, EMAIL, IDENTIFICACION, IDFUNCION FROM CLIENTE NATURAL JOIN BOLETA)T1"
-				+ "	INNER JOIN"
-				+ "(SELECT IDFUNCION, IDOBRA FROM FUNCION NATURAL JOIN OBRA WHERE REALIZADO=1 AND FECHA BETWEEN '"+fecha1+"' AND '"+fecha2+"')T2"
-				+ "ON T1.IDFUNCION=T2.IDFUNCION)T3"
-				+ "INNER JOIN"
-				+ "(SELECT IDOBRA FROM COMPANIAOBRA NATURAL JOIN COMPANIA WHERE IDCOMPANIA="+idcompania+")T4"
-				+ "	ON T3.IDOBRA=T4.IDOBRA"
-				+ "ORDER BY"+orderby;
+				+ "(SELECT IDCLIENTE, NOMBRE, APELLIDO, EMAIL, IDENTIFICACION, IDFUNCION FROM CLIENTE NATURAL JOIN BOLETA)T1 "
+				+ "	INNER JOIN "
+				+ "(SELECT IDFUNCION, IDOBRA FROM FUNCION NATURAL JOIN OBRA WHERE REALIZADO=1 AND FECHA BETWEEN '"+fecha1+"' AND '"+fecha2+"')T2 "
+				+ "ON T1.IDFUNCION=T2.IDFUNCION)T3 "
+				+ "INNER JOIN "
+				+ "(SELECT IDOBRA FROM COMPANIAOBRA NATURAL JOIN COMPANIA WHERE IDCOMPANIA="+idcompania+")T4 "
+				+ "	ON T3.IDOBRA=T4.IDOBRA "
+				+ "ORDER BY "+orderby;
 		System.out.println("RFC10"+sql);
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
@@ -103,16 +104,17 @@ public ArrayList<Cliente> darRFC10(String fecha1, String fecha2, int idcompania,
 		return clientesRFC10;
 	}
 
-public ArrayList<Cliente> darRFC11(String fecha1, String fecha2, String descripcion, String nombreLocalidad, String hora1, String hora2, String day ) throws SQLException, Exception {
+public ArrayList<RFC11> darRFC11(String fecha1, String fecha2, String descripcion, String nombreLocalidad, String hora1, String hora2, String day ) throws SQLException, Exception {
 	
-	ArrayList<Cliente> clientesRFC11 = new ArrayList<Cliente>();
+	ArrayList<RFC11> RFC11 = new ArrayList<RFC11>();
 	String sql = "SELECT "
 			+ "NOMBREOBRA AS NOMBRE_OBRA, "
 			+ "FECHA AS FECHA_FUNCION, "
-			+ "NOMBRE AS SITIO_FUNCION, "
-			+ "COUNT(IDBOLETA) AS CANTIDAD_BOLETAS_VENDIDAS, "
+			+"NOMBRE AS SITIO_FUNCION, "
+			+ "COUNT(IDBOLETA) AS CANTIDAD_BOLETAS_VENDIDAS, " 
 			+ "COUNT(IDCLIENTE) AS CANTIDAD_USUARIOS_REGISTRADOS "
-			+ "FROM OBRA "
+			+ "FROM "
+			+ "OBRA "
 			+ "NATURAL JOIN "
 			+ "FUNCION "
 			+ "NATURAL JOIN "
@@ -126,34 +128,35 @@ public ArrayList<Cliente> darRFC11(String fecha1, String fecha2, String descripc
 			+ "NATURAL JOIN "
 			+ "DESCRIPCIONESESPACIO "
 			+ "NATURAL JOIN "
-			+ "DESCRIPCIONTECNICA"
+			+ "DESCRIPCIONTECNICA "
 			+ "WHERE "
 			+ "FECHA BETWEEN '"+fecha1+"' AND '"+fecha2+"' "
 			+ "AND "
 			+ "DESCRIPCION LIKE '%"+descripcion+"%' "
 			+ "AND "
-			+ "NOMBRELOCALIDAD LIKE '%"+nombreLocalidad+"%'"
+			+ "NOMBRELOCALIDAD = '"+nombreLocalidad+"' "
 			+ "AND "
-			+ "TO_CHAR(FECHA, 'HH24') BETWEEN '"+hora1+"' AND '"+hora2+"'  "
+			+ "TO_CHAR(FECHA, 'HH24') BETWEEN '"+hora1+"' AND '"+hora2+"' "
 			+ "AND "
-			+ "TO_CHAR(FECHA, 'DAY', 'NLS_DATE_LANGUAGE=ENGLISH') = "+day+"";
+			+ "TO_CHAR(FECHA, 'DAY',  'NLS_DATE_LANGUAGE=ENGLISH') LIKE '%"+day+"%' "
+			+ "GROUP BY NOMBREOBRA, FECHA, NOMBRE";
 	
 	
-	System.out.println("RFC11"+sql);
+	System.out.println("RFC11 "+sql);
 
 	PreparedStatement prepStmt = conn.prepareStatement(sql);
 	recursos.add(prepStmt);
 	ResultSet rs = prepStmt.executeQuery();
 //TODO HACER DAO
 	while (rs.next()) {
-		int idUsuario = rs.getInt(1);
-		String nombre = rs.getString(2);
-		String apellido = rs.getString(3);
-		String email = rs.getString(4);
-		String identificacion = rs.getString(5);
-		clientesRFC11.add(new Cliente(null, idUsuario, nombre, apellido, email, identificacion));
+		String nombreobra = rs.getString(1);
+		Timestamp fechafuncion = rs.getTimestamp(2);
+		String sitiofuncion = rs.getString(3);
+		int cantidadboletasvendidas = rs.getInt(4);
+		int cantidadusuariosregistrados = rs.getInt(5);
+		RFC11.add(new RFC11(nombreobra, fechafuncion, sitiofuncion, cantidadboletasvendidas, cantidadusuariosregistrados));
 	}
-	return clientesRFC11;
+	return RFC11;
 }
 
 public ArrayList<Cliente> darRFC12(String conteo) throws SQLException, Exception {
@@ -171,13 +174,13 @@ public ArrayList<Cliente> darRFC12(String conteo) throws SQLException, Exception
 			+ "EMAIL, "
 			+ "IDENTIFICACION, "
 			+ "COUNT(IDBOLETA) AS CONTEO"
-			+ "FROM "
+			+ " FROM "
 			+ "(CLIENTE "
 			+ "NATURAL JOIN "
 			+ "BOLETA "
 			+ "NATURAL JOIN "
 			+ "LOCALIDAD) "
-			+ "WHERE NOMBRELOCALIDAD = 'VIP'"
+			+ "WHERE NOMBRELOCALIDAD = 'VIP' "
 			+ "GROUP BY IDCLIENTE, NOMBRE, APELLIDO, EMAIL, IDENTIFICACION)"
 			+ "WHERE CONTEO >= "+conteo+"";
 	

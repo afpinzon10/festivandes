@@ -3,7 +3,7 @@ package rest;
 import javax.servlet.ServletContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
@@ -13,6 +13,7 @@ import javax.ws.rs.core.Response;
 import tm.FestivAndes;
 import vos.ListaClientes;
 import vos.ListaRFC1;
+import vos.ListaRFC11;
 import vos.ListaRFC2;
 import vos.ListaRFC3;
 import vos.ListaRFC4;
@@ -45,7 +46,6 @@ public class ConsultasServices {
 		ListaRFC1 rfc1;
 		try {
 			rfc1 = tm.darRFC1();
-			System.out.println("lol1");
 			
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
@@ -61,7 +61,6 @@ public class ConsultasServices {
 		ListaRFC2 rfc2;
 		try {
 			rfc2 = tm.darRFC2();
-			System.out.println("lol2");
 			
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
@@ -77,7 +76,6 @@ public class ConsultasServices {
 		ListaRFC3 rfc3;
 		try {
 			rfc3 = tm.darRFC3();
-			System.out.println("lol3");
 			
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
@@ -93,7 +91,6 @@ public class ConsultasServices {
 		ListaRFC4 rfc4;
 		try {
 			rfc4 = tm.darRFC4();
-			System.out.println("lol4");
 			
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
@@ -102,7 +99,7 @@ public class ConsultasServices {
 	}
 	
 	
-	@GET
+	@PUT
 	@Path("/rfc9")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
@@ -113,7 +110,6 @@ public class ConsultasServices {
 		try {
 
 			rfc9 = tm.darRFC9(param.getFecha1(), param.getFecha2(), param.getIdcompania(), param.getOrderby());
-			System.out.println("lol4");
 			
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
@@ -121,7 +117,7 @@ public class ConsultasServices {
 		return Response.status(200).entity(rfc9).build();
 	}
 	
-	@GET
+	@PUT
 	@Path("/rfc10")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
@@ -131,7 +127,6 @@ public class ConsultasServices {
 		ListaClientes rfc10;
 		try {
 			rfc10 = tm.darRFC10(param.getFecha1(), param.getFecha2(), param.getIdcompania(), param.getOrderby());
-			System.out.println("lol4");
 			
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
@@ -139,18 +134,17 @@ public class ConsultasServices {
 		return Response.status(200).entity(rfc10).build();
 	}
 	
-	@GET
+	@PUT
 	@Path("/rfc11")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getRFC11(Parametros param) {
 		
 		FestivAndes tm = new FestivAndes(getPath());
-		ListaClientes rfc11;
+		ListaRFC11 rfc11;
 		try {
 			
 			rfc11 = tm.darRFC11(param.getFecha1(), param.getFecha2(), param.getDescripcion(), param.getNombreLocalidad(), param.getHora1(), param.getHora2(), param.getDay());
-			System.out.println("lol4");
 			
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
@@ -158,7 +152,7 @@ public class ConsultasServices {
 		return Response.status(200).entity(rfc11).build();
 	}
 	
-	@GET
+	@PUT
 	@Path("/rfc12")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
@@ -168,7 +162,6 @@ public class ConsultasServices {
 		ListaClientes rfc12;
 		try {
 			rfc12 = tm.darRFC12(param.getConteo());
-			System.out.println("lol4");
 			
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();

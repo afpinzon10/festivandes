@@ -57,39 +57,6 @@ public class Parametros {
 	}
 
 	
-	public Parametros(@JsonProperty(value="fecha1") String fecha1, @JsonProperty(value="fecha2") String fecha2, @JsonProperty(value="idcompania") int idcompania,
-			@JsonProperty(value="orderby") String orderby) {
-		super();
-		this.fecha1 = fecha1;
-		this.fecha2 = fecha2;
-		this.idcompania = idcompania;
-		this.orderby = orderby;
-		
-	}
-	
-	public Parametros(@JsonProperty(value="fecha1") String fecha1, @JsonProperty(value="fecha2") String fecha2, 
-			 @JsonProperty(value="descripcion") String descripcion,
-			@JsonProperty(value="nombreLocalidad") String nombreLocalidad, @JsonProperty(value="hora1")String hora1,
-			@JsonProperty(value="hora2") String hora2, @JsonProperty(value="day") String day) {
-		super();
-		this.fecha1 = fecha1;
-		this.fecha2 = fecha2;
-		this.descripcion = descripcion;
-		this.nombreLocalidad = nombreLocalidad;
-		this.hora1 = hora1;
-		this.hora2 = hora2;
-		this.day = day;
-	}
-
-
-
-	
-	public Parametros(@JsonProperty(value="conteo") String conteo) {
-		super();
-		
-		this.conteo = conteo;
-	}
-
 
 	public String getFecha1() {
 		return fecha1;

@@ -1,8 +1,8 @@
 package vos;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import java.sql.Timestamp;
 
-import com.sun.jmx.snmp.Timestamp;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 public class RFC11 {
 
