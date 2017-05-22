@@ -1385,7 +1385,7 @@ public class FestivAndes {
 		return new ListaRFC11(lit4);
 	}
 
-	public ListaClientes darRFC12(String conteo) throws Exception {
+	public ListaClientes darRFC12(String conteo, int idUsuario) throws Exception {
 		DAOIT4 daoIteracion4 = new DAOIT4();
 		ArrayList<Cliente> lit4= null;
 		try 
@@ -1393,7 +1393,7 @@ public class FestivAndes {
 			//////Transacción - ACID Example
 			this.conn = darConexion();
 			daoIteracion4.setConn(conn);
-			lit4=daoIteracion4.darRFC12(conteo);
+			lit4=daoIteracion4.darRFC12(conteo, idUsuario);
 		} catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
 			e.printStackTrace();

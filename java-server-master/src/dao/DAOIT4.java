@@ -159,7 +159,22 @@ public ArrayList<RFC11> darRFC11(String fecha1, String fecha2, String descripcio
 	return RFC11;
 }
 
-public ArrayList<Cliente> darRFC12(String conteo) throws SQLException, Exception {
+public ArrayList<Cliente> darRFC12(String conteo, int idusuario) throws SQLException, Exception {
+	
+	
+	String gerente = "SELECT IDROL FROM USUARIO NATURAL JOIN ROL WHERE IDUSUARIO ='"+idusuario+"'";
+	
+	System.out.println("RFC11 "+gerente);
+
+	PreparedStatement prepStmt2 = conn.prepareStatement(gerente);
+	recursos.add(prepStmt2);
+	ResultSet rs2 = prepStmt2.executeQuery();
+	
+	rs2.next();
+	System.out.println(rs2.getInt(1));
+	if (rs2.getInt(1)!=4){
+		throw new Exception("consulta solo permitida para gerente");
+	}
 	
 	ArrayList<Cliente> clientesRFC12 = new ArrayList<Cliente>();
 	String sql = "SELECT IDCLIENTE, "
@@ -198,6 +213,7 @@ public ArrayList<Cliente> darRFC12(String conteo) throws SQLException, Exception
 		String identificacion = rs.getString(5);
 		clientesRFC12.add(new Cliente(null, idUsuario, nombre, apellido, email, identificacion));
 	}
+	
 	return clientesRFC12;
 }
 	
