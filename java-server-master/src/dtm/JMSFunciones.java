@@ -117,7 +117,7 @@ public class JMSFunciones implements MessageListener, ExceptionListener
 	 * Atributo que representa el time out de el requerimiento de dar todos los videos
 	 * 10 segundos
 	 */
-	public final static int TIME_OUT = 10;
+	public final static int TIME_OUT = 1000;
 
 	/**
 	 * Ruta para la conexión al Remote Connection Factory
@@ -313,6 +313,7 @@ public class JMSFunciones implements MessageListener, ExceptionListener
 		QueueSender queueSender = queueSession.createSender(queue);
 		queueSender.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
 		TextMessage message = queueSession.createTextMessage(response);
+		message.setJMSType("TextMessage");
 		queueSender.send(message);
 		System.out.println("sent: " + message.getText());
 		queueConn.close();
