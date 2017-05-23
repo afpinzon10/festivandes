@@ -26,8 +26,9 @@ import dao.DAORFC3;
 import dao.DAORFC4;
 import dao.DAOTablaVideos;
 import dao.DAOUsuarios;
-
-
+import dtm.IncompleteReplyException;
+import dtm.JMSFunciones;
+import dtm.NonReplyException;
 import vos.ListaVideos;
 import vos.NotaDebito;
 import vos.Preferencia;
@@ -65,13 +66,17 @@ import vos.Video;
 public class FestivAndes {
 
 
-	private static final String CONNECTION_DATA_FILE_NAME_REMOTE = "/conexion.properties";
+	public static final String CONNECTION_DATA_FILE_NAME_REMOTE = "/conexion.properties";
 	private String connectionDataPath;
 	private String user;
 	private String password;
 	private String url;
 	private String driver;
 	private Connection conn;
+	
+	private String myQueue;
+	private int numberApps;
+	private String topicAllFunciones;
 
 
 	public FestivAndes(String contextPathP) {
@@ -91,6 +96,9 @@ public class FestivAndes {
 			this.user = prop.getProperty("usuario");
 			this.password = prop.getProperty("clave");
 			this.driver = prop.getProperty("driver");
+			this.myQueue = prop.getProperty("myQueue");
+			this.topicAllFunciones = prop.getProperty("topicAllFunciones");
+			this.numberApps = Integer.parseInt(prop.getProperty("numberApps"));
 			Class.forName(driver);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -140,7 +148,7 @@ public class FestivAndes {
 		return new ListaUsuarios(usuarios);
 	}
 
-	public ListaFunciones darFunciones() throws Exception {
+	public ListaFunciones darFuncionesLocal() throws Exception {
 		ArrayList<Funcion> funciones;
 		DAOFunciones daoFunciones = new DAOFunciones();
 		try 
@@ -170,6 +178,45 @@ public class FestivAndes {
 			}
 		}
 		return new ListaFunciones(funciones);
+	}
+	
+	public ListaFunciones darFuncionesRemote() throws Exception {
+		ListaFunciones funciones;
+		DAOFunciones dao = new DAOFunciones();
+		ArrayList<Funcion> funcionesLocal = new ArrayList<Funcion>();
+		try {	
+			Connection conn = darConexion();
+			dao.setConn(conn);
+			funcionesLocal = dao.darFunciones();
+			
+			JMSFunciones instancia = JMSFunciones.darInstacia(this);
+			instancia.setUpJMSManager(this.numberApps, this.myQueue, this.topicAllFunciones);
+			funciones = instancia.getFuncionesResponse();  
+			
+			funciones.addFunciones(new ListaFunciones(funcionesLocal));
+			System.out.println("size:" + funciones.getFunciones().size());
+		} catch (NonReplyException e) {
+			throw new IncompleteReplyException("No Reply from apps - Local Videos:",new ListaFunciones(funcionesLocal));
+		} catch (IncompleteReplyException e) {
+			ListaFunciones temp = e.getPartialResponseFunciones();
+			temp.addFunciones(new ListaFunciones(funcionesLocal));
+			throw new IncompleteReplyException("Incomplete Reply:",temp);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return funciones; 
+
 	}
 
 	public ListaBoletas darBoletas() throws Exception {

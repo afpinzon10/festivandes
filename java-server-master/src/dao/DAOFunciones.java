@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 
 import vos.Abono;
 import vos.Boleta;
@@ -56,10 +56,11 @@ private ArrayList<Object> recursos;
 		while (rs.next()) {
 			int idFuncion = Integer.parseInt(rs.getString("IDFUNCION"));
 			Timestamp fecha = rs.getTimestamp("FECHA");
+			Date date = new Date(fecha.getTime());
 			int idEspacio = Integer.parseInt(rs.getString("IDESPACIO"));
 			int idObra = Integer.parseInt(rs.getString("IDOBRA"));
-			int realizado = rs.getInt("REALIZADO");
-			Funciones.add(new Funcion( idFuncion, fecha, idEspacio, idObra,realizado));
+			boolean realizado = rs.getInt("REALIZADO")==1?true:false;
+			Funciones.add(new Funcion( idFuncion, date, idEspacio, idObra,realizado));
 		}
 		return Funciones;
 	}
@@ -69,8 +70,8 @@ private ArrayList<Object> recursos;
 		String sql = "INSERT INTO FUNCION VALUES (FECHA, HORA, IDESPACIO, IDOBRA)";
 		sql += funcion.getFecha() + ",'";
 
-		sql += funcion.getIdespacio() + ",'";
-		sql += funcion.getIdobra() +")";
+		sql += funcion.getIdsitio() + ",'";
+		sql += funcion.getIdespectaculo() +")";
 		
 		System.out.println("SQL stmt    addCliente:" + sql);
 		
@@ -113,10 +114,11 @@ private ArrayList<Object> recursos;
 		while (rs.next()) {
 			int idFuncion = Integer.parseInt(rs.getString("IDFUNCION"));
 			Timestamp fecha = rs.getTimestamp("FECHA");
+			Date date = new Date(fecha.getTime());
 			int idEspacio = Integer.parseInt(rs.getString("IDESPACIO"));
 			int idObra = Integer.parseInt(rs.getString("IDOBRA"));
-			int realizado = rs.getInt("REALIZADO");
-			Funciones.add(new Funcion( idFuncion, fecha, idEspacio, idObra,realizado));
+			boolean realizado = rs.getInt("REALIZADO")==1?true:false;
+			Funciones.add(new Funcion( idFuncion, date, idEspacio, idObra,realizado));
 		}
 		return Funciones;
 	}
@@ -164,10 +166,11 @@ private ArrayList<Object> recursos;
 		while (rs.next()) {
 			int idFuncion = Integer.parseInt(rs.getString("IDFUNCION"));
 			Timestamp fecha = rs.getTimestamp("FECHA");
+			Date date = new Date(fecha.getTime());
 			int idEspacio = Integer.parseInt(rs.getString("IDESPACIO"));
 			int idObra = Integer.parseInt(rs.getString("IDOBRA"));
-			int realizado = rs.getInt("REALIZADO");
-			Funciones1.add(new Funcion( idFuncion, fecha, idEspacio, idObra,realizado));
+			boolean realizado = rs.getInt("REALIZADO")==1?true:false;
+			Funciones1.add(new Funcion( idFuncion, date, idEspacio, idObra,realizado));
 		}
 		
 		
@@ -180,10 +183,11 @@ private ArrayList<Object> recursos;
 		while (rs.next()) {
 			int idFuncion = Integer.parseInt(rs.getString("IDFUNCION"));
 			Timestamp fecha = rs.getTimestamp("FECHA");
+			Date date = new Date(fecha.getTime());
 			int idEspacio = Integer.parseInt(rs.getString("IDESPACIO"));
 			int idObra = Integer.parseInt(rs.getString("IDOBRA"));
-			int realizado = rs.getInt("REALIZADO");
-			Funciones2.add(new Funcion( idFuncion, fecha, idEspacio, idObra,realizado));
+			boolean realizado = rs.getInt("REALIZADO")==1?true:false;
+			Funciones2.add(new Funcion( idFuncion, date, idEspacio, idObra,realizado));
 		}
 		
 		sql = "SELECT DISTINCT IDFUNCION, FECHA, IDESPACIO, IDOBRA, REALIZADO FROM (SELECT * FROM FUNCION NATURAL JOIN BOLETASCANCELADAS)T1 INNER JOIN CLIENTE ON T1.IDCLIENTE = " + idcliente;
@@ -195,10 +199,11 @@ private ArrayList<Object> recursos;
 		while (rs.next()) {
 			int idFuncion = Integer.parseInt(rs.getString("IDFUNCION"));
 			Timestamp fecha = rs.getTimestamp("FECHA");
+			Date date = new Date(fecha.getTime());
 			int idEspacio = Integer.parseInt(rs.getString("IDESPACIO"));
 			int idObra = Integer.parseInt(rs.getString("IDOBRA"));
-			int realizado = rs.getInt("REALIZADO");
-			Funciones3.add(new Funcion( idFuncion, fecha, idEspacio, idObra,realizado));
+			boolean realizado = rs.getInt("REALIZADO")==1?true:false;
+			Funciones3.add(new Funcion( idFuncion, date, idEspacio, idObra,realizado));
 		}
 		
 		return new ListaFunciones2(Funciones1,Funciones2,Funciones3);

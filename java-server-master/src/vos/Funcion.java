@@ -3,7 +3,7 @@ package vos;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
@@ -17,31 +17,30 @@ public class Funcion {
 	private int idfuncion;
 	
 	@JsonProperty(value="fecha")
-	private Timestamp fecha;
+	private Date fecha;
 	
-	@JsonProperty(value="idespacio")
-	private int idespacio;
+	@JsonProperty(value="idsitio")
+	private int idsitio;
 	
-	@JsonProperty(value="idobra")
-	private int idobra;
+	@JsonProperty(value="idespectaculo")
+	private int idespectaculo;
 	
 	@JsonProperty(value="realizado")
-	private int realizado;
+	private boolean realizado;
 
 	public Funcion( @JsonProperty(value="idfuncion") int idfuncion, 
-			@JsonProperty(value="fecha") Timestamp fecha,  
-			@JsonProperty(value="idespacio") int idespacio, @JsonProperty(value="idobra") int idobra, 
-			@JsonProperty(value="realizado") int realizado) {
+			@JsonProperty(value="fecha") Date fecha,  
+			@JsonProperty(value="idsitio") int idsitio, 
+			@JsonProperty(value="idespectaculo") int idespectaculo, 
+			@JsonProperty(value="realizado") boolean realizado) {
 	
 		this.idfuncion = idfuncion;
 		this.fecha = fecha;
 	
-		this.idespacio = idespacio;
-		this.idobra = idobra;
+		this.idsitio = idsitio;
+		this.idespectaculo = idespectaculo;
 		this.realizado = realizado;
 	}
-
-
 
 	public int getIdfuncion() {
 		return idfuncion;
@@ -51,38 +50,40 @@ public class Funcion {
 		this.idfuncion = idfuncion;
 	}
 
-	public Timestamp getFecha() {
+	public Date getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Timestamp fecha) {
+	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
 
-
-	public int getIdespacio() {
-		return idespacio;
+	public int getIdsitio() {
+		return idsitio;
 	}
 
-	public void setIdespacio(int idespacio) {
-		this.idespacio = idespacio;
+	public void setIdsitio(int idsitio) {
+		this.idsitio = idsitio;
 	}
 
-	public int getIdobra() {
-		return idobra;
+	public int getIdespectaculo() {
+		return idespectaculo;
 	}
 
-	public void setIdobra(int idobra) {
-		this.idobra = idobra;
+	public void setIdespectaculo(int idespectaculo) {
+		this.idespectaculo = idespectaculo;
 	}
 
-	public int getRealizado() {
+	public boolean isRealizado() {
 		return realizado;
 	}
 
-	public void setRealizado(int realizado) {
+	public void setRealizado(boolean realizado) {
 		this.realizado = realizado;
 	}
+
+
+
 	
 	
 	

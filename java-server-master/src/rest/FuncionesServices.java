@@ -48,7 +48,7 @@ public class FuncionesServices {
 			FestivAndes tm = new FestivAndes(getPath());
 			ListaFunciones funciones;
 			try {
-				funciones = tm.darFunciones();
+				funciones = tm.darFuncionesRemote();
 			} catch (Exception e) {
 				return Response.status(500).entity(doErrorMessage(e)).build();
 			}
