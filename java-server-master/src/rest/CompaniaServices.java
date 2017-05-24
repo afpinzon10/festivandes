@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.servlet.ServletContext;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -17,6 +18,9 @@ import tm.FestivAndes;
 
 import vos.Cliente;
 import vos.Compania;
+import vos.ListaBoletas;
+import vos.ListaNotaDebito;
+import vos.NotaDebito;
 
 
 @Path("")
@@ -48,6 +52,22 @@ public class CompaniaServices {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		return Response.status(200).entity(c).build();
+	}
+	
+	@DELETE
+	@Path("/{id}/eliminarCompania/")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response devolverBoleta(@PathParam ("id") int id) {
+		
+		FestivAndes tm = new FestivAndes(getPath());
+		ListaNotaDebito devolucion;
+		try {
+			devolucion =tm.deleteCompaniaLocal(id);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(devolucion).build();
 	}
 	
 }

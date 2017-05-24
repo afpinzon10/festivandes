@@ -9,6 +9,7 @@ import java.sql.Savepoint;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Properties;
 
 import dao.DAOAbono;
@@ -27,6 +28,7 @@ import dao.DAORFC4;
 import dao.DAOTablaVideos;
 import dao.DAOUsuarios;
 import dtm.IncompleteReplyException;
+import dtm.JMSCompania;
 import dtm.JMSFunciones;
 import dtm.NonReplyException;
 import vos.ListaVideos;
@@ -444,6 +446,88 @@ public class FestivAndes {
 		}
 	}
 
+	public ListaNotaDebito deleteCompaniaLocal(int id) throws Exception {
+		DAOCompanias daoCompanias = new DAOCompanias();
+		try 
+		{
+			//////Transacción
+			this.conn = darConexion();
+			daoCompanias.setConn(conn);
+			ArrayList<Integer> listaFunciones = daoCompanias.deleteCompania(id);
+			List<NotaDebito> nota = new ArrayList<NotaDebito>();
+			for (Integer integer : listaFunciones) {
+				List<NotaDebito> lista = cancelarFuncion(integer).getNotadebito();
+				for (NotaDebito notaDebito : lista) {
+					nota.add(notaDebito);
+				}
+			}
+			return new ListaNotaDebito(nota);
+			
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoCompanias.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	
+	public ListaNotaDebito deleteCompaniaRemote(int id) throws Exception {
+		DAOCompanias daoCompanias = new DAOCompanias();
+		try 
+		{
+			//////Transacción
+			this.conn = darConexion();
+			daoCompanias.setConn(conn);
+			ArrayList<Integer> listaFunciones = daoCompanias.deleteCompania(id);
+			List<NotaDebito> nota = new ArrayList<NotaDebito>();
+			for (Integer integer : listaFunciones) {
+				List<NotaDebito> lista = cancelarFuncion(integer).getNotadebito();
+				for (NotaDebito notaDebito : lista) {
+					nota.add(notaDebito);
+				}
+			}
+			
+			JMSCompania instancia = JMSCompania.darInstacia(this);
+			instancia.setUpJMSManager(this.numberApps, this.myQueue, this.topicAllFunciones);
+			nota = instancia.getCompaniasResponse(""+id);  
+			
+			
+			return new ListaNotaDebito(nota);
+			
+		} catch (NonReplyException e) {
+			throw new IncompleteReplyException("No Reply from apps - Local Videos:",new ListaFunciones(funcionesLocal));
+		} catch (IncompleteReplyException e) {
+			throw new IncompleteReplyException("Incomplete Reply:", null);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoCompanias.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+
+	}
 
 	//-----------------------------------------------------
 	// RF4 REGISTRAR FUNCION

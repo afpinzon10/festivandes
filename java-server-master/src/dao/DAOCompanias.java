@@ -68,4 +68,29 @@ private ArrayList<Object> recursos;
 		
 		
 	}
+
+	public ArrayList<Integer> deleteCompania(int id) throws SQLException{
+		String q = "SELECT DISTINCT IDFUNCION FROM FUNCION NATURAL JOIN OBRA NATURAL JOIN FUNCION NATURAL JOIN COMPANIAOBRA NATURAL JOIN COMPANIA WHERE IDCOMPANIA = " + id;
+		System.out.println("SQL stmt    selectFunciones:" + q);
+		
+		PreparedStatement prepStmt = conn.prepareStatement(q);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		ArrayList<Integer> ret = new ArrayList<Integer>();
+		while (rs.next()) {
+			int idf = rs.getInt(1);
+			ret.add(idf);
+			
+		}
+		
+		String sql = "DELETE FROM COMPANIA WHERE IDCOMPANIA = " + id;
+		
+		
+		System.out.println("SQL stmt    deleteCompania:" + sql);
+		
+		PreparedStatement prepStmt2 = conn.prepareStatement(sql);
+		recursos.add(prepStmt2);
+		prepStmt2.executeQuery();
+		return ret;
+	}
 }
